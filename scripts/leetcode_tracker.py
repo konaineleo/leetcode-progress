@@ -2,7 +2,8 @@
 LeetCode Progress Tracker (Standard Library Edition - Zero Dependencies)
 Fetches live statistics and activity from LeetCode public GraphQL API,
 records history, scans for locally categorized solutions, and regenerates
-a clean, professional README.md.
+a sleek, modern portfolio-grade README.md inspired by modern high-contrast
+developer profiles (e.g. Muqeeth47 aesthetic + full automation).
 """
 
 import os
@@ -337,48 +338,91 @@ def generate_readme(data: dict, solutions: list[dict]) -> str:
     badges_list = latest.get("badges", [])
 
     lines = []
-    lines.append("# ⚡ LeetCode Progress Tracker\n")
-    lines.append(
-        f"An automated, verifiable showcase tracking algorithm practice and contest progression for **[{LEETCODE_USERNAME}](https://leetcode.com/{LEETCODE_USERNAME}/)** on GitHub.\n"
-    )
+    # Decorative Header Wave
+    lines.append("<div align=\"center\">\n")
+    lines.append("  <img src=\"https://capsule-render.vercel.app/api?type=waving&color=0:0d001a,50:2d0057,100:5b21b6&height=120&section=header&text=LeetCode%20Journey&fontSize=38&fontColor=ffffff&fontAlignY=38\" width=\"100%\"/>\n")
 
-    # Header badges
-    lines.append("<p align=\"left\">")
-    lines.append(f"  <a href=\"https://leetcode.com/{LEETCODE_USERNAME}/\"><img src=\"https://img.shields.io/badge/LeetCode-{LEETCODE_USERNAME}-FFA116?style=for-the-badge&logo=LeetCode&logoColor=black\" alt=\"LeetCode\"/></a>")
-    lines.append(f"  <a href=\"https://github.com/{GITHUB_USERNAME}\"><img src=\"https://img.shields.io/badge/GitHub-{GITHUB_USERNAME}-181717?style=for-the-badge&logo=github&logoColor=white\" alt=\"GitHub\"/></a>")
-    lines.append(f"  <img src=\"https://img.shields.io/badge/Total_Solved-{total_solved}-brightgreen?style=for-the-badge\" alt=\"Total Solved\"/>")
-    lines.append(f"  <img src=\"https://img.shields.io/badge/Contest_Rating-{contest_rating}-orange?style=for-the-badge\" alt=\"Contest Rating\"/>")
-    lines.append("</p>\n")
+    # Profile & Social Badges
+    lines.append("  <br/>\n")
+    lines.append(f"  <a href=\"https://leetcode.com/{LEETCODE_USERNAME}/\"><img src=\"https://img.shields.io/badge/LeetCode-{LEETCODE_USERNAME}-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6\" alt=\"LeetCode\"/></a>")
+    lines.append(f"  <a href=\"https://github.com/{GITHUB_USERNAME}\"><img src=\"https://img.shields.io/badge/GitHub-{GITHUB_USERNAME}-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6\" alt=\"GitHub\"/></a>")
+    lines.append(f"  <img src=\"https://img.shields.io/badge/Global_Rank-{ranking_str}-a855f7?style=for-the-badge&labelColor=0d001a\" alt=\"Rank\"/>\n")
+    lines.append("</div>\n")
 
     lines.append("---\n")
 
-    # Executive Summary Card
-    lines.append("## 📊 Overview & Profile Metrics\n")
+    # High-Contrast Stat Badges Row (muqeeth47 aesthetic)
+    lines.append("## ⚡ LeetCode Progress\n")
+    lines.append("<div align=\"center\">\n")
+    lines.append(f"  <img src=\"https://img.shields.io/badge/Solved-{total_solved}-c084fc?style=for-the-badge&labelColor=0d001a\" alt=\"Solved\"/>")
+    lines.append(f"  <img src=\"https://img.shields.io/badge/Easy-{easy_solved}-00b8a3?style=for-the-badge&labelColor=0d001a\" alt=\"Easy\"/>")
+    lines.append(f"  <img src=\"https://img.shields.io/badge/Medium-{medium_solved}-ffc01e?style=for-the-badge&labelColor=0d001a\" alt=\"Medium\"/>")
+    lines.append(f"  <img src=\"https://img.shields.io/badge/Hard-{hard_solved}-ef4743?style=for-the-badge&labelColor=0d001a\" alt=\"Hard\"/>")
+    lines.append(f"  <img src=\"https://img.shields.io/badge/Rating-{contest_rating}-a855f7?style=for-the-badge&labelColor=0d001a\" alt=\"Rating\"/>\n")
+    lines.append("  <br/><br/>\n")
+
+    # Dynamic Visual Cards: Heatmap + Contest Rating Dashboard
+    lines.append("  <table border=\"0\" cellspacing=\"8\" cellpadding=\"0\">")
+    lines.append("    <tr>")
+    lines.append("      <td align=\"center\">")
+    lines.append(f"        <a href=\"https://leetcode.com/{LEETCODE_USERNAME}/\">")
+    lines.append(f"          <img src=\"https://leetcard.jacoblin.cool/{LEETCODE_USERNAME}?theme=dark&font=JetBrains+Mono&ext=heatmap&border=0&radius=12\" alt=\"LeetCode Heatmap\"/>")
+    lines.append("        </a>")
+    lines.append("      </td>")
+    lines.append("      <td align=\"center\">")
+    lines.append(f"        <a href=\"https://leetcode.com/{LEETCODE_USERNAME}/\">")
+    lines.append(f"          <img src=\"https://leetcard.jacoblin.cool/{LEETCODE_USERNAME}?theme=dark&font=JetBrains+Mono&ext=contest&border=0&radius=12\" alt=\"Contest Rating Dashboard\"/>")
+    lines.append("        </a>")
+    lines.append("      </td>")
+    lines.append("    </tr>")
+    lines.append("  </table>\n")
+    lines.append("</div>\n")
+
+    lines.append("---\n")
+
+    # GitHub Activity Grid
+    lines.append("## 🐙 GitHub Contribution Grid\n")
+    lines.append("<div align=\"center\">\n")
+    lines.append("  <table border=\"0\" cellspacing=\"0\" cellpadding=\"16\" style=\"background-color: #05000a; border-radius: 12px;\">")
+    lines.append("    <tr>")
+    lines.append("      <td align=\"center\">")
+    lines.append(f"        <a href=\"https://github.com/{GITHUB_USERNAME}\">")
+    lines.append(f"          <img src=\"https://ghchart.rshah.org/a855f7/{GITHUB_USERNAME}\" alt=\"{GITHUB_USERNAME}'s GitHub Contribution Grid\"/>")
+    lines.append("        </a>")
+    lines.append("      </td>")
+    lines.append("    </tr>")
+    lines.append("  </table>\n")
+    lines.append("</div>\n")
+
+    lines.append("---\n")
+
+    # Summary Metrics Table
+    lines.append("## 📊 Comprehensive Profile Metrics\n")
     lines.append("| Metric | Value | Detail |")
     lines.append("| :--- | :--- | :--- |")
     lines.append(f"| **LeetCode Profile** | [`@{LEETCODE_USERNAME}`](https://leetcode.com/{LEETCODE_USERNAME}/) | Public Profile |")
-    lines.append(f"| **Global Ranking** | **{ranking_str}** | Across all active global users |")
-    lines.append(f"| **Total Solved** | **{total_solved}** | Verified solved problems |")
-    lines.append(f"| **Contest Rating** | **{contest_rating}** | {contest_ranking_str} global rank (Top {top_pct_str}) |")
+    lines.append(f"| **Global Ranking** | **{ranking_str}** | Across active global participants |")
+    lines.append(f"| **Total Solved** | **{total_solved}** | Verified AC problems |")
+    lines.append(f"| **Contest Rating** | **{contest_rating}** | {contest_ranking_str} ranking (Top {top_pct_str}) |")
     lines.append(f"| **Contests Attended** | **{contests_attended}** | Live weekly & biweekly contests |")
-    lines.append(f"| **Streak Tracking** | **{current_streak} days** (Current) | **{max_streak} days** (Longest) |")
-    lines.append(f"| **Earned Badges** | **{len(badges_list)}** | Annual & monthly challenge honors |")
+    lines.append(f"| **Streak Tracking** | **{current_streak} days** (Current) | **{max_streak} days** (Longest active) |")
+    lines.append(f"| **Earned Badges** | **{len(badges_list)}** | Special challenge medals |")
     lines.append(f"| **Last Synced** | `{updated_at}` | Automated via GitHub Actions |\n")
 
-    # Difficulty Breakdown
+    # Difficulty Breakdown Table
     lines.append("## 🎯 Difficulty Breakdown\n")
     easy_pct = (easy_solved / total_solved * 100) if total_solved else 0
     med_pct = (medium_solved / total_solved * 100) if total_solved else 0
     hard_pct = (hard_solved / total_solved * 100) if total_solved else 0
 
-    lines.append("| Difficulty | Solved | Distribution | Status |")
-    lines.append("| :--- | :---: | :--- | :---: |")
+    lines.append("| Difficulty | Solved | Ratio | Visual Badge |")
+    lines.append("| :--- | :---: | :---: | :---: |")
     lines.append(f"| 🟢 **Easy** | **{easy_solved}** | `{easy_pct:.1f}%` | ![Easy](https://img.shields.io/badge/-Easy-00b8a3?style=flat-square) |")
     lines.append(f"| 🟡 **Medium** | **{medium_solved}** | `{med_pct:.1f}%` | ![Medium](https://img.shields.io/badge/-Medium-ffc01e?style=flat-square) |")
-    lines.append(f"| 🔴 **Hard** | **{hard_solved}** | `{hard_pct:.1f}%` | ![Hard](https://img.shields.io/badge/-Hard-ff375f?style=flat-square) |")
-    lines.append(f"| 🏆 **Total** | **{total_solved}** | `100.0%` | ![Total](https://img.shields.io/badge/-Solved-blue?style=flat-square) |\n")
+    lines.append(f"| 🔴 **Hard** | **{hard_solved}** | `{hard_pct:.1f}%` | ![Hard](https://img.shields.io/badge/-Hard-ef4743?style=flat-square) |")
+    lines.append(f"| 🏆 **Total** | **{total_solved}** | `100.0%` | ![Total](https://img.shields.io/badge/-Solved-c084fc?style=flat-square) |\n")
 
-    # Badges Showcase
+    # Earned Badges
     if badges_list:
         lines.append("## 🏅 Earned Badges\n")
         lines.append("<p align=\"left\">")
@@ -394,7 +438,7 @@ def generate_readme(data: dict, solutions: list[dict]) -> str:
     # Solutions Catalog
     lines.append("## 📁 Solutions Catalog\n")
     if solutions:
-        lines.append(f"Catalog contains **{len(solutions)}** documented solution(s) in [`solutions/`](solutions/):\n")
+        lines.append(f"Catalog contains **{len(solutions)}** documented solution(s) organized in [`solutions/`](solutions/):\n")
         lines.append("| # | Problem | Topic | Difficulty | Solution |")
         lines.append("| :---: | :--- | :--- | :---: | :---: |")
         for idx, sol in enumerate(solutions, start=1):
@@ -412,17 +456,17 @@ def generate_readme(data: dict, solutions: list[dict]) -> str:
     else:
         lines.append(
             "> [!NOTE]\n"
-            "> Categorized solution code files can be placed into `solutions/<Topic>/<Difficulty>/<problem-name>.py` "
-            "or directly in `solutions/`. The tracker automatically scans and links them in this table on every run.\n"
+            "> Solutions placed into `solutions/<Topic>/<Difficulty>/<problem-name>.py` "
+            "are scanned and automatically indexed in this table.\n"
         )
 
-    # Progress History
+    # Progress History Table
     lines.append("## 📈 Progress History\n")
     if snapshots:
         recent_snaps = snapshots[-10:]
         recent_snaps.reverse()
         lines.append("| Date | Total Solved | Easy | Medium | Hard | Global Rank | Daily Change |")
-        lines.append("| :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n".rstrip())
+        lines.append("| :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
         for s in recent_snaps:
             delta = s.get("deltaSolved", 0)
             delta_str = f"+{delta}" if delta > 0 else "-"
@@ -432,14 +476,14 @@ def generate_readme(data: dict, solutions: list[dict]) -> str:
             )
         lines.append("")
 
-    # Automation Footer
+    # Footer
     lines.append("---\n")
     lines.append("### ⚙️ Automation & Architecture\n")
     lines.append(
-        "- **Data Source**: LeetCode Official GraphQL Endpoint (`https://leetcode.com/graphql`)\n"
-        "- **Update Engine**: GitHub Actions scheduled daily via cron (`0 0 * * *`) and on-demand workflow dispatch\n"
-        "- **Zero False Commits**: Git diff check prevents redundant commits when statistics are unchanged\n"
-        "- **Maintainer**: [@konaineleo](https://github.com/konaineleo)\n"
+        "- **Data Pipeline**: Automated live queries via official LeetCode GraphQL API\n"
+        "- **Visual Cards**: Dynamic real-time dark-mode cards with `leetcard` & high-contrast `ghchart`\n"
+        "- **Automated Workflow**: Scheduled GitHub Actions cron runner with idempotent commit handling\n"
+        f"- **Repository Owner**: [@{GITHUB_USERNAME}](https://github.com/{GITHUB_USERNAME})\n"
     )
 
     return "\n".join(lines)
@@ -473,7 +517,7 @@ def main():
         f.write(readme_content)
     print(f"Updated {README_FILE}")
 
-    # Output whether changes took place
+    # Output status
     if stats_changed:
         print("Progress changes detected.")
     else:

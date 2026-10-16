@@ -1,37 +1,87 @@
-# ⚡ LeetCode Progress Tracker
+<div align="center">
 
-An automated, verifiable showcase tracking algorithm practice and contest progression for **[smkyuzarsif](https://leetcode.com/smkyuzarsif/)** on GitHub.
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d001a,50:2d0057,100:5b21b6&height=120&section=header&text=LeetCode%20Journey&fontSize=38&fontColor=ffffff&fontAlignY=38" width="100%"/>
 
-<p align="left">
-  <a href="https://leetcode.com/smkyuzarsif/"><img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-FFA116?style=for-the-badge&logo=LeetCode&logoColor=black" alt="LeetCode"/></a>
-  <a href="https://github.com/konaineleo"><img src="https://img.shields.io/badge/GitHub-konaineleo-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
-  <img src="https://img.shields.io/badge/Total_Solved-391-brightgreen?style=for-the-badge" alt="Total Solved"/>
-  <img src="https://img.shields.io/badge/Contest_Rating-1530.99-orange?style=for-the-badge" alt="Contest Rating"/>
-</p>
+  <br/>
+
+  <a href="https://leetcode.com/smkyuzarsif/"><img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6" alt="LeetCode"/></a>
+  <a href="https://github.com/konaineleo"><img src="https://img.shields.io/badge/GitHub-konaineleo-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6" alt="GitHub"/></a>
+  <img src="https://img.shields.io/badge/Global_Rank-#339,788-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
+
+</div>
 
 ---
 
-## 📊 Overview & Profile Metrics
+## ⚡ LeetCode Progress
+
+<div align="center">
+
+  <img src="https://img.shields.io/badge/Solved-391-c084fc?style=for-the-badge&labelColor=0d001a" alt="Solved"/>
+  <img src="https://img.shields.io/badge/Easy-212-00b8a3?style=for-the-badge&labelColor=0d001a" alt="Easy"/>
+  <img src="https://img.shields.io/badge/Medium-161-ffc01e?style=for-the-badge&labelColor=0d001a" alt="Medium"/>
+  <img src="https://img.shields.io/badge/Hard-18-ef4743?style=for-the-badge&labelColor=0d001a" alt="Hard"/>
+  <img src="https://img.shields.io/badge/Rating-1530.99-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rating"/>
+
+  <br/><br/>
+
+  <table border="0" cellspacing="8" cellpadding="0">
+    <tr>
+      <td align="center">
+        <a href="https://leetcode.com/smkyuzarsif/">
+          <img src="https://leetcard.jacoblin.cool/smkyuzarsif?theme=dark&font=JetBrains+Mono&ext=heatmap&border=0&radius=12" alt="LeetCode Heatmap"/>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://leetcode.com/smkyuzarsif/">
+          <img src="https://leetcard.jacoblin.cool/smkyuzarsif?theme=dark&font=JetBrains+Mono&ext=contest&border=0&radius=12" alt="Contest Rating Dashboard"/>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+---
+
+## 🐙 GitHub Contribution Grid
+
+<div align="center">
+
+  <table border="0" cellspacing="0" cellpadding="16" style="background-color: #05000a; border-radius: 12px;">
+    <tr>
+      <td align="center">
+        <a href="https://github.com/konaineleo">
+          <img src="https://ghchart.rshah.org/a855f7/konaineleo" alt="konaineleo's GitHub Contribution Grid"/>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+---
+
+## 📊 Comprehensive Profile Metrics
 
 | Metric | Value | Detail |
 | :--- | :--- | :--- |
 | **LeetCode Profile** | [`@smkyuzarsif`](https://leetcode.com/smkyuzarsif/) | Public Profile |
-| **Global Ranking** | **#339,788** | Across all active global users |
-| **Total Solved** | **391** | Verified solved problems |
-| **Contest Rating** | **1530.99** | #323,721 global rank (Top 36.83%) |
+| **Global Ranking** | **#339,788** | Across active global participants |
+| **Total Solved** | **391** | Verified AC problems |
+| **Contest Rating** | **1530.99** | #323,721 ranking (Top 36.83%) |
 | **Contests Attended** | **22** | Live weekly & biweekly contests |
-| **Streak Tracking** | **1 days** (Current) | **144 days** (Longest) |
-| **Earned Badges** | **3** | Annual & monthly challenge honors |
-| **Last Synced** | `October 16, 2026 at 13:41 UTC` | Automated via GitHub Actions |
+| **Streak Tracking** | **1 days** (Current) | **144 days** (Longest active) |
+| **Earned Badges** | **3** | Special challenge medals |
+| **Last Synced** | `October 16, 2026 at 14:05 UTC` | Automated via GitHub Actions |
 
 ## 🎯 Difficulty Breakdown
 
-| Difficulty | Solved | Distribution | Status |
-| :--- | :---: | :--- | :---: |
+| Difficulty | Solved | Ratio | Visual Badge |
+| :--- | :---: | :---: | :---: |
 | 🟢 **Easy** | **212** | `54.2%` | ![Easy](https://img.shields.io/badge/-Easy-00b8a3?style=flat-square) |
 | 🟡 **Medium** | **161** | `41.2%` | ![Medium](https://img.shields.io/badge/-Medium-ffc01e?style=flat-square) |
-| 🔴 **Hard** | **18** | `4.6%` | ![Hard](https://img.shields.io/badge/-Hard-ff375f?style=flat-square) |
-| 🏆 **Total** | **391** | `100.0%` | ![Total](https://img.shields.io/badge/-Solved-blue?style=flat-square) |
+| 🔴 **Hard** | **18** | `4.6%` | ![Hard](https://img.shields.io/badge/-Hard-ef4743?style=flat-square) |
+| 🏆 **Total** | **391** | `100.0%` | ![Total](https://img.shields.io/badge/-Solved-c084fc?style=flat-square) |
 
 ## 🏅 Earned Badges
 
@@ -43,7 +93,7 @@ An automated, verifiable showcase tracking algorithm practice and contest progre
 
 ## 📁 Solutions Catalog
 
-Catalog contains **1** documented solution(s) in [`solutions/`](solutions/):
+Catalog contains **1** documented solution(s) organized in [`solutions/`](solutions/):
 
 | # | Problem | Topic | Difficulty | Solution |
 | :---: | :--- | :--- | :---: | :---: |
@@ -59,7 +109,7 @@ Catalog contains **1** documented solution(s) in [`solutions/`](solutions/):
 
 ### ⚙️ Automation & Architecture
 
-- **Data Source**: LeetCode Official GraphQL Endpoint (`https://leetcode.com/graphql`)
-- **Update Engine**: GitHub Actions scheduled daily via cron (`0 0 * * *`) and on-demand workflow dispatch
-- **Zero False Commits**: Git diff check prevents redundant commits when statistics are unchanged
-- **Maintainer**: [@konaineleo](https://github.com/konaineleo)
+- **Data Pipeline**: Automated live queries via official LeetCode GraphQL API
+- **Visual Cards**: Dynamic real-time dark-mode cards with `leetcard` & high-contrast `ghchart`
+- **Automated Workflow**: Scheduled GitHub Actions cron runner with idempotent commit handling
+- **Repository Owner**: [@konaineleo](https://github.com/konaineleo)
