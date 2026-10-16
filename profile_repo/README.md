@@ -6,11 +6,11 @@
   <br/>
 
   <!-- PROFILE & SOCIAL PILL BADGES -->
-  <a href="https://leetcode.com/u/smkyuzarsif/" target="_blank">
+  <a href="https://leetcode.com/smkyuzarsif/" target="_blank">
     <img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-EAF27C?style=for-the-badge&logo=leetcode&logoColor=0B0033&labelColor=370031" alt="LeetCode"/>
   </a>
-  <a href="https://github.com/smkyuzarsif" target="_blank">
-    <img src="https://img.shields.io/badge/GitHub-smkyuzarsif-CE8964?style=for-the-badge&logo=github&logoColor=0B0033&labelColor=370031" alt="GitHub"/>
+  <a href="https://github.com/konaineleo" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-konaineleo-CE8964?style=for-the-badge&logo=github&logoColor=0B0033&labelColor=370031" alt="GitHub"/>
   </a>
   <img src="https://img.shields.io/badge/Global_Rank-#339,788-EAF27C?style=for-the-badge&labelColor=370031" alt="Global Rank"/>
   <img src="https://img.shields.io/badge/Contest_Rating-1530.99-CE8964?style=for-the-badge&labelColor=370031" alt="Rating"/>
@@ -36,12 +36,12 @@
   <table border="0" cellspacing="8" cellpadding="0">
     <tr>
       <td align="center">
-        <a href="https://leetcode.com/u/smkyuzarsif/" target="_blank">
+        <a href="https://leetcode.com/smkyuzarsif/" target="_blank">
           <img src="https://leetcard.jacoblin.cool/smkyuzarsif?theme=dark&font=JetBrains+Mono&ext=heatmap&border=0&radius=12" alt="LeetCode Submission Heatmap"/>
         </a>
       </td>
       <td align="center">
-        <a href="https://leetcode.com/u/smkyuzarsif/" target="_blank">
+        <a href="https://leetcode.com/smkyuzarsif/" target="_blank">
           <img src="https://leetcard.jacoblin.cool/smkyuzarsif?theme=dark&font=JetBrains+Mono&ext=contest&border=0&radius=12" alt="LeetCode Contest Rating Dashboard"/>
         </a>
       </td>
@@ -59,8 +59,8 @@
   <table border="0" cellspacing="0" cellpadding="16" style="background-color: #0B0033; border: 1px solid #832232; border-radius: 14px;">
     <tr>
       <td align="center">
-        <a href="https://github.com/smkyuzarsif" target="_blank">
-          <img src="https://ghchart.rshah.org/CE8964/smkyuzarsif" alt="smkyuzarsif's GitHub Contribution Grid"/>
+        <a href="https://github.com/konaineleo" target="_blank">
+          <img src="https://ghchart.rshah.org/CE8964/konaineleo" alt="konaineleo's GitHub Contribution Grid"/>
         </a>
       </td>
     </tr>
