@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LeetCode Analytics Dashboard — smkyuzarsif</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2.0.0">
 </head>
 <body>
   <div class="app-container">
@@ -209,14 +209,28 @@
               <!-- Dynamically populated SVG Heatmap -->
             </div>
 
-            <div class="heatmap-legend">
-              <span>Less</span>
-              <div class="legend-swatch" style="background: var(--heat-empty);"></div>
-              <div class="legend-swatch" style="background: var(--heat-lvl1);"></div>
-              <div class="legend-swatch" style="background: var(--heat-lvl2);"></div>
-              <div class="legend-swatch" style="background: var(--heat-lvl3);"></div>
-              <div class="legend-swatch" style="background: var(--heat-lvl4);"></div>
-              <span>More</span>
+            <div class="heatmap-legend" id="heatmapLegend">
+              <span style="font-weight: 600;">Activity:</span>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <div class="legend-swatch" style="background: var(--heat-empty); border: 1px solid var(--heat-border);"></div>
+                <span>No activity</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <div class="legend-swatch" style="background: var(--heat-lvl1);"></div>
+                <span>Low</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <div class="legend-swatch" style="background: var(--heat-lvl2);"></div>
+                <span>Moderate</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <div class="legend-swatch" style="background: var(--heat-lvl3);"></div>
+                <span>High</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <div class="legend-swatch" style="background: var(--heat-lvl4);"></div>
+                <span>Very high</span>
+              </div>
             </div>
           </div>
 
@@ -320,6 +334,6 @@
 
   <div id="custom-tooltip"></div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=2.0.0"></script>
 </body>
 </html>

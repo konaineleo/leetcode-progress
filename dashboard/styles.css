@@ -22,12 +22,13 @@
   --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
   --border-subtle: rgba(131, 34, 50, 0.4);
 
-  /* Heatmap Colors (Dark Theme) */
-  --heat-empty: rgba(55, 0, 49, 0.5);
-  --heat-lvl1: #5A0E38;
-  --heat-lvl2: #832232;
-  --heat-lvl3: #CE8964;
-  --heat-lvl4: #EAF27C;
+  /* Heatmap Colors (Dark Theme: Monochromatic Royal Blue Scale) */
+  --heat-empty: #111827;       /* Zero submissions: near-black navy */
+  --heat-lvl1: #1E3A8A;        /* Low activity: deep royal blue */
+  --heat-lvl2: #1D4ED8;        /* Moderate activity: royal blue */
+  --heat-lvl3: #2563EB;        /* High activity: vivid blue */
+  --heat-lvl4: #60A5FA;        /* Very high activity: light electric blue */
+  --heat-border: rgba(30, 58, 138, 0.4);
 
   /* Difficulties */
   --diff-easy: #00b8a3;
@@ -54,12 +55,13 @@
   --card-shadow: 0 4px 20px 0 rgba(58, 46, 42, 0.06);
   --border-subtle: #E9DDE5;
 
-  /* Heatmap Colors (Light Theme) */
-  --heat-empty: #EFEBF5;
-  --heat-lvl1: #E8DCC6;
-  --heat-lvl2: #F3BCA2;
-  --heat-lvl3: #E49B7A;
-  --heat-lvl4: #8BC34A;
+  /* Heatmap Colors (Light Theme: Royal Blue Scale on Light Surface with distinct empty border) */
+  --heat-empty: #E2E8F0;       /* Zero submissions: clean subtle surface */
+  --heat-lvl1: #1E3A8A;        /* Low activity: deep royal blue */
+  --heat-lvl2: #1D4ED8;        /* Moderate activity: royal blue */
+  --heat-lvl3: #2563EB;        /* High activity: vivid blue */
+  --heat-lvl4: #60A5FA;        /* Very high activity: light electric blue */
+  --heat-border: rgba(29, 78, 216, 0.25);
 
   /* Difficulties */
   --diff-easy: #009688;
@@ -478,9 +480,11 @@ body {
 
 .heat-cell {
   cursor: pointer;
-  transition: transform 0.15s ease;
-  rx: 3px;
-  ry: 3px;
+  transition: transform 0.15s ease, fill 0.25s ease;
+  rx: 2.5px;
+  ry: 2.5px;
+  stroke: var(--heat-border);
+  stroke-width: 0.75px;
 }
 
 .heat-cell:hover {
@@ -488,14 +492,29 @@ body {
   stroke-width: 1.5px;
 }
 
+.heat-month-label {
+  fill: var(--text-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.heat-day-label {
+  fill: var(--text-muted);
+  font-size: 9px;
+  font-weight: 500;
+}
+
 .heatmap-legend {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 6px;
-  margin-top: 12px;
+  gap: 8px;
+  margin-top: 14px;
   font-size: 0.78rem;
   color: var(--text-muted);
+  flex-wrap: wrap;
+}
 }
 
 .legend-swatch {

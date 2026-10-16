@@ -224,7 +224,7 @@ function renderLanguages(languages) {
   });
 }
 
-// Heatmap generator (52 weeks x 7 days)
+// Heatmap generator (52 weeks x 7 days) with Month Labels & Monochromatic Royal Blue Scale
 function renderHeatmap(submissionCalendar) {
   const wrapper = document.getElementById("heatmapWrapper");
   if (!wrapper) return;
@@ -232,10 +232,12 @@ function renderHeatmap(submissionCalendar) {
 
   // Parse submission count mapping by ISO YYYY-MM-DD
   const countMap = {};
-  for (const [ts, count] of Object.entries(submissionCalendar)) {
-    const d = new Date(parseInt(ts, 10) * 1000);
-    const key = d.toISOString().split("T")[0];
-    countMap[key] = count;
+  if (submissionCalendar) {
+    for (const [ts, count] of Object.entries(submissionCalendar)) {
+      const d = new Date(parseInt(ts, 10) * 1000);
+      const key = d.toISOString().split("T")[0];
+      countMap[key] = count;
+    }
   }
 
   // Calculate past 52 weeks (364 days) up to today
@@ -247,11 +249,13 @@ function renderHeatmap(submissionCalendar) {
     days.push(d);
   }
 
-  const cellSize = 11;
+  const cellSize = 12;
   const cellGap = 3;
+  const leftPad = 28; // Margin for Mon/Wed/Fri weekday labels
+  const topPad = 22;  // Margin for Month labels
   const numWeeks = 53;
-  const width = numWeeks * (cellSize + cellGap) + 30;
-  const height = 7 * (cellSize + cellGap) + 20;
+  const width = leftPad + numWeeks * (cellSize + cellGap) + 10;
+  const height = topPad + 7 * (cellSize + cellGap) + 10;
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
@@ -261,31 +265,61 @@ function renderHeatmap(submissionCalendar) {
 
   const tooltip = document.getElementById("custom-tooltip");
 
-  // Get color scale from CSS variables
+  // Get color scale from CSS variables with explicit Royal Blue monochromatic fallbacks
   const computedStyle = getComputedStyle(document.documentElement);
-  const emptyColor = computedStyle.getPropertyValue("--heat-empty").trim() || "rgba(55,0,49,0.5)";
-  const lvl1Color = computedStyle.getPropertyValue("--heat-lvl1").trim() || "#5A0E38";
-  const lvl2Color = computedStyle.getPropertyValue("--heat-lvl2").trim() || "#832232";
-  const lvl3Color = computedStyle.getPropertyValue("--heat-lvl3").trim() || "#CE8964";
-  const lvl4Color = computedStyle.getPropertyValue("--heat-lvl4").trim() || "#EAF27C";
+  const emptyColor = computedStyle.getPropertyValue("--heat-empty").trim() || "#111827";
+  const lvl1Color = computedStyle.getPropertyValue("--heat-lvl1").trim() || "#1E3A8A";
+  const lvl2Color = computedStyle.getPropertyValue("--heat-lvl2").trim() || "#1D4ED8";
+  const lvl3Color = computedStyle.getPropertyValue("--heat-lvl3").trim() || "#2563EB";
+  const lvl4Color = computedStyle.getPropertyValue("--heat-lvl4").trim() || "#60A5FA";
 
+  // Deterministic monotonic mapping: Higher count ALWAYS produces an equal or brighter shade
   function getLevelColor(count) {
-    if (!count || count === 0) return emptyColor;
-    if (count <= 2) return lvl1Color;
-    if (count <= 5) return lvl2Color;
-    if (count <= 10) return lvl3Color;
-    return lvl4Color;
+    if (count === undefined || count === null || count === 0) return emptyColor; // Zero: #111827
+    if (count <= 2) return lvl1Color;   // Low: #1E3A8A
+    if (count <= 5) return lvl2Color;   // Moderate: #1D4ED8
+    if (count <= 10) return lvl3Color;  // High: #2563EB
+    return lvl4Color;                   // Very High: #60A5FA
   }
 
-  // Render cells column by column (weeks)
-  let currentWeek = 0;
-  days.forEach((day) => {
-    const dayOfWeek = day.getDay(); // 0 is Sunday
-    const dateKey = day.toISOString().split("T")[0];
-    const count = countMap[dateKey] || 0;
+  // Draw Weekday Labels (Mon, Wed, Fri) on the left
+  const weekdays = [
+    { label: "Mon", row: 1 },
+    { label: "Wed", row: 3 },
+    { label: "Fri", row: 5 }
+  ];
+  weekdays.forEach((wd) => {
+    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute("x", 4);
+    text.setAttribute("y", topPad + wd.row * (cellSize + cellGap) + 9);
+    text.setAttribute("class", "heat-day-label");
+    text.textContent = wd.label;
+    svg.appendChild(text);
+  });
 
-    const x = currentWeek * (cellSize + cellGap) + 20;
-    const y = dayOfWeek * (cellSize + cellGap);
+  // Track month transitions across weeks to render accurate month headers
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  let lastMonth = -1;
+  const monthLabels = [];
+
+  let currentWeek = 0;
+  days.forEach((day, index) => {
+    const dayOfWeek = day.getDay(); // 0 is Sun, 1 is Mon, ..., 6 is Sat
+    const dateKey = day.toISOString().split("T")[0];
+    const count = countMap[dateKey] !== undefined ? countMap[dateKey] : 0;
+    const month = day.getMonth();
+
+    // Check if new month starts or first week
+    if (day.getDate() <= 7 && month !== lastMonth && dayOfWeek === 1) {
+      monthLabels.push({
+        text: monthNames[month],
+        weekIndex: currentWeek
+      });
+      lastMonth = month;
+    }
+
+    const x = leftPad + currentWeek * (cellSize + cellGap);
+    const y = topPad + dayOfWeek * (cellSize + cellGap);
 
     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     rect.setAttribute("x", x);
@@ -295,10 +329,13 @@ function renderHeatmap(submissionCalendar) {
     rect.setAttribute("fill", getLevelColor(count));
     rect.classList.add("heat-cell");
     rect.setAttribute("tabindex", "0");
+    rect.setAttribute("data-date", dateKey);
+    rect.setAttribute("data-count", count);
 
     rect.addEventListener("mouseenter", (e) => {
       tooltip.style.display = "block";
-      tooltip.innerHTML = `<strong>${count} submissions</strong> on ${dateKey}`;
+      const countLabel = count === 0 ? "No submissions" : `${count} submission${count > 1 ? "s" : ""}`;
+      tooltip.innerHTML = `<strong>${countLabel}</strong> on ${dateKey}`;
       tooltip.style.left = `${e.clientX + 10}px`;
       tooltip.style.top = `${e.clientY - 30}px`;
     });
@@ -312,6 +349,16 @@ function renderHeatmap(submissionCalendar) {
     if (dayOfWeek === 6) {
       currentWeek++;
     }
+  });
+
+  // Render Month Labels along top
+  monthLabels.forEach((ml) => {
+    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute("x", leftPad + ml.weekIndex * (cellSize + cellGap));
+    text.setAttribute("y", 13);
+    text.setAttribute("class", "heat-month-label");
+    text.textContent = ml.text;
+    svg.appendChild(text);
   });
 
   wrapper.appendChild(svg);
