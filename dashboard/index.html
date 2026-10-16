@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeetCode Analytics Dashboard — smkyuzarsif</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-logo">L</div>
+        <div class="brand-title">LeetCode<span style="color: var(--accent-warm);">X</span></div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item active" href="#dashboard" data-page="dashboard">
+          <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+          Dashboard
+        </a>
+        <a class="nav-item" href="#problems" data-page="problems">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          Problems
+        </a>
+        <a class="nav-item" href="#contests" data-page="contests">
+          <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
+          Contests
+        </a>
+        <a class="nav-item" href="#discuss" data-page="discuss">
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+          Discuss
+        </a>
+        <a class="nav-item" href="#mock" data-page="mock">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+          Mock Interview
+        </a>
+        <a class="nav-item" href="#study" data-page="study">
+          <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+          Study Plan
+        </a>
+        <a class="nav-item" href="#progress" data-page="progress">
+          <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+          Progress
+        </a>
+        <a class="nav-item" href="#achievements" data-page="achievements">
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+          Achievements
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Container -->
+    <div class="main-wrapper">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--text-muted)"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input type="text" id="searchInput" placeholder="Search problems, topics, tags...">
+        </div>
+
+        <div class="header-actions">
+          <button class="refresh-btn" id="refreshBtn" title="Sync live data with LeetCode">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+            Sync
+          </button>
+
+          <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle theme">
+            <span id="themeIcon">☀️</span>
+            <span id="themeText">Light</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Dashboard Grid -->
+      <main class="dashboard-grid" id="mainDashboardView">
+        <!-- Center Column -->
+        <div class="content-left">
+          <!-- Profile Card -->
+          <div class="dash-card profile-banner-card">
+            <div class="profile-info-group">
+              <img id="userAvatar" src="https://assets.leetcode.com/users/29X1HZdSYm/avatar_1751726856.png" alt="Avatar" class="profile-avatar">
+              <div class="profile-user-details">
+                <h2>
+                  <span id="userRealName">SMK</span>
+                  <span class="badge-tag">Knight Tier</span>
+                </h2>
+                <p class="profile-subtext">@<span id="profileUsername">smkyuzarsif</span> • Contest Rating: <strong style="color: var(--accent-lime);" id="profileRating">1530.99</strong></p>
+                <p class="profile-subtext" style="margin-top: 4px; font-size: 0.8rem;" id="lastSyncedText">Syncing live data...</p>
+              </div>
+            </div>
+            <div class="profile-actions">
+              <a href="https://leetcode.com/u/smkyuzarsif/" target="_blank" rel="noopener" class="btn-primary">
+                Open Profile
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Top 4 Statistics Cards -->
+          <div class="stat-cards-grid">
+            <div class="stat-metric-card">
+              <div class="stat-metric-header">
+                <span class="stat-label">Total Solved</span>
+                <span style="color: var(--accent-lime);">🏆</span>
+              </div>
+              <div class="stat-value" id="statTotalSolved">391</div>
+              <div class="stat-footer">Across all difficulties</div>
+            </div>
+
+            <div class="stat-metric-card">
+              <div class="stat-metric-header">
+                <span class="stat-label">Contest Rating</span>
+                <span style="color: var(--accent-warm);">⭐</span>
+              </div>
+              <div class="stat-value" id="statContestRating">1530.99</div>
+              <div class="stat-footer" id="statContestRank">Rank #323,721</div>
+            </div>
+
+            <div class="stat-metric-card">
+              <div class="stat-metric-header">
+                <span class="stat-label">Global Rank</span>
+                <span style="color: #00b8a3;">🌍</span>
+              </div>
+              <div class="stat-value" id="statGlobalRank">#339,788</div>
+              <div class="stat-footer">Top active solvers</div>
+            </div>
+
+            <div class="stat-metric-card">
+              <div class="stat-metric-header">
+                <span class="stat-label">Contests</span>
+                <span style="color: #ef4743;">🎯</span>
+              </div>
+              <div class="stat-value" id="statContestsAttended">22</div>
+              <div class="stat-footer">Rated competitions</div>
+            </div>
+          </div>
+
+          <!-- Problem Solving Breakdown Card -->
+          <div class="dash-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span>🎯</span> Problem-Solving Distribution
+              </div>
+            </div>
+
+            <div class="progress-card-grid">
+              <div class="donut-container">
+                <svg width="140" height="140" viewBox="0 0 36 36">
+                  <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--bg-primary)" stroke-width="3.5" />
+                  <!-- Easy arc -->
+                  <path id="donutEasy" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--diff-easy)" stroke-width="3.5" stroke-dasharray="54.2, 100" />
+                  <!-- Medium arc -->
+                  <path id="donutMedium" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--diff-medium)" stroke-width="3.5" stroke-dasharray="41.2, 100" stroke-dashoffset="-54.2" />
+                  <!-- Hard arc -->
+                  <path id="donutHard" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--diff-hard)" stroke-width="3.5" stroke-dasharray="4.6, 100" stroke-dashoffset="-95.4" />
+                </svg>
+                <div class="donut-center-text">
+                  <div class="donut-center-number" id="donutTotal">391</div>
+                  <div class="donut-center-sub">Solved</div>
+                </div>
+              </div>
+
+              <div class="progress-bars-list">
+                <div class="prog-item">
+                  <div class="prog-item-header">
+                    <span style="color: var(--diff-easy); font-weight: 700;">Easy</span>
+                    <span><strong id="progEasyCount">212</strong> / 850+ (<span id="progEasyPct">54.2%</span>)</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill" id="progEasyFill" style="width: 54.2%; background: var(--diff-easy);"></div>
+                  </div>
+                </div>
+
+                <div class="prog-item">
+                  <div class="prog-item-header">
+                    <span style="color: var(--diff-medium); font-weight: 700;">Medium</span>
+                    <span><strong id="progMedCount">161</strong> / 1750+ (<span id="progMedPct">41.2%</span>)</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill" id="progMedFill" style="width: 41.2%; background: var(--diff-medium);"></div>
+                  </div>
+                </div>
+
+                <div class="prog-item">
+                  <div class="prog-item-header">
+                    <span style="color: var(--diff-hard); font-weight: 700;">Hard</span>
+                    <span><strong id="progHardCount">18</strong> / 750+ (<span id="progHardPct">4.6%</span>)</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill" id="progHardFill" style="width: 4.6%; background: var(--diff-hard);"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Heatmap Card -->
+          <div class="dash-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span>🗓️</span> Submission Calendar & Activity Heatmap
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">Last 12 Months</div>
+            </div>
+
+            <div class="heatmap-container" id="heatmapWrapper">
+              <!-- Dynamically populated SVG Heatmap -->
+            </div>
+
+            <div class="heatmap-legend">
+              <span>Less</span>
+              <div class="legend-swatch" style="background: var(--heat-empty);"></div>
+              <div class="legend-swatch" style="background: var(--heat-lvl1);"></div>
+              <div class="legend-swatch" style="background: var(--heat-lvl2);"></div>
+              <div class="legend-swatch" style="background: var(--heat-lvl3);"></div>
+              <div class="legend-swatch" style="background: var(--heat-lvl4);"></div>
+              <span>More</span>
+            </div>
+          </div>
+
+          <!-- Contest Rating Trend Card -->
+          <div class="dash-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span>📈</span> Contest Rating History
+              </div>
+              <div style="font-size: 0.82rem; color: var(--accent-lime); font-weight: 700;" id="contestTrendLabel">
+                Peak: 1530.99
+              </div>
+            </div>
+
+            <div class="chart-container" id="contestChartWrapper">
+              <svg id="contestChartSvg" width="100%" height="100%" style="overflow: visible;"></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column (Streaks, Badges, Languages, Solutions) -->
+        <div class="content-right">
+          <!-- Streaks Card -->
+          <div class="dash-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span>🔥</span> Practice Streaks
+              </div>
+            </div>
+
+            <div class="streak-box">
+              <div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase;">Active Streak</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted);">Current daily run</div>
+              </div>
+              <div class="streak-number" id="streakCurrent">1 <span style="font-size: 1rem;">days</span></div>
+            </div>
+
+            <div class="streak-box" style="margin-bottom: 0;">
+              <div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase;">Longest Streak</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted);">Personal record</div>
+              </div>
+              <div class="streak-number" style="color: var(--accent-warm);" id="streakMax">144 <span style="font-size: 1rem;">days</span></div>
+            </div>
+          </div>
+
+          <!-- Earned Badges -->
+          <div class="dash-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span>🏅</span> Verified Badges
+              </div>
+            </div>
+            <div class="badges-container" id="badgesContainer">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Languages Card -->
+          <div class="dash-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span>💻</span> Languages Used
+              </div>
+            </div>
+            <div id="languagesList">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Quick Solution Hub Link -->
+          <div class="dash-card" style="background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));">
+            <div class="card-title-row">
+              <div class="card-title">
+                <span>📁</span> Solutions Hub
+              </div>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+              Documented code solutions are stored and categorized by topic and difficulty inside <code style="color: var(--accent-lime);">solutions/</code>.
+            </p>
+            <a href="https://github.com/konaineleo/leetcode-progress/tree/main/solutions" target="_blank" class="btn-primary" style="width: 100%; justify-content: center;">
+              Browse Solutions
+            </a>
+          </div>
+        </div>
+      </main>
+
+      <!-- Placeholder page for other navigation items -->
+      <section id="placeholderView" class="dashboard-grid" style="display: none;">
+        <div class="dash-card" style="grid-column: 1 / -1; padding: 48px; text-align: center;">
+          <h2 id="placeholderTitle" style="font-size: 1.8rem; margin-bottom: 12px; color: var(--accent-lime);">Section</h2>
+          <p id="placeholderDesc" style="color: var(--text-secondary); font-size: 1rem; max-width: 500px; margin: 0 auto 24px;">
+            This section connects with your personal problem backlog and study lists.
+          </p>
+          <button class="btn-primary" onclick="showDashboard()">Return to Dashboard</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div id="custom-tooltip"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
