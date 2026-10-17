@@ -1,0 +1,620 @@
+diff --git a/README.md b/README.md
+index db1d06b..2cce8bc 100644
+--- a/README.md
++++ b/README.md
+@@ -6,7 +6,7 @@
+ 
+   <a href="https://leetcode.com/smkyuzarsif/"><img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6" alt="LeetCode"/></a>
+   <a href="https://github.com/konaineleo"><img src="https://img.shields.io/badge/GitHub-konaineleo-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6" alt="GitHub"/></a>
+-  <img src="https://img.shields.io/badge/Global_Rank-#339,788-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
++  <img src="https://img.shields.io/badge/Global_Rank-%23339%2C788-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
+ 
+ </div>
+ 
+diff --git a/dashboard/app.js b/dashboard/app.js
+index 59b19fe..20b9ee8 100644
+--- a/dashboard/app.js
++++ b/dashboard/app.js
+@@ -45,6 +45,18 @@ function setTheme(theme) {
+   }
+ }
+ 
++// Avatar: if the remote image cannot load, swap in a local initial instead of a broken-image icon
++function initAvatarFallback() {
++  const avatar = document.getElementById("userAvatar");
++  if (!avatar) return;
++  const letter = (USERNAME[0] || "?").toUpperCase();
++  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96"><rect width="96" height="96" rx="48" fill="#1E3A8A"/><text x="48" y="62" font-size="44" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#fff">${letter}</text></svg>`;
++  const fallbackSrc = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
++  const apply = () => { if (avatar.src !== fallbackSrc) avatar.src = fallbackSrc; };
++  avatar.addEventListener("error", apply);
++  if (avatar.complete && avatar.naturalWidth === 0) apply(); // already failed before the listener attached
++}
++
+ // Fetch Profile Data
+ async function loadDashboardData(forceRefresh = false) {
+   const endpoint = forceRefresh ? "/api/refresh" : "/api/profile";
+@@ -176,7 +188,10 @@ function renderBadges(badges) {
+   container.innerHTML = "";
+ 
+   if (!badges || badges.length === 0) {
+-    container.innerHTML = `<p style="font-size: 0.85rem; color: var(--text-muted);">No verified public badges.</p>`;
++    const p = document.createElement("p");
++    p.style.cssText = "font-size:0.85rem;color:var(--text-muted);";
++    p.textContent = "No verified public badges.";
++    container.appendChild(p);
+     return;
+   }
+ 
+@@ -186,11 +201,33 @@ function renderBadges(badges) {
+ 
+     const div = document.createElement("div");
+     div.className = "badge-item";
+-    div.innerHTML = `
+-      <img src="${icon}" alt="${b.displayName}">
+-      <div class="badge-name">${b.displayName}</div>
+-      <div class="badge-date">${b.creationDate || "Earned"}</div>
+-    `;
++
++    const mark = document.createElement("div");
++    mark.className = "badge-mark";
++    const fallback = () => {
++      // Neutral text mark: never a broken-image icon, never a fake LeetCode badge.
++      mark.className = "badge-mark badge-mark-text";
++      mark.textContent = "★";
++    };
++    if (icon) {
++      const img = document.createElement("img");
++      img.alt = b.displayName || "Badge";
++      img.referrerPolicy = "no-referrer";
++      img.addEventListener("error", () => { img.remove(); fallback(); });
++      img.src = icon;
++      mark.appendChild(img);
++    } else {
++      fallback();
++    }
++
++    const name = document.createElement("div");
++    name.className = "badge-name";
++    name.textContent = b.displayName || "Badge";
++    const date = document.createElement("div");
++    date.className = "badge-date";
++    date.textContent = b.creationDate || "Earned";
++
++    div.append(mark, name, date);
+     container.appendChild(div);
+   });
+ }
+@@ -224,140 +261,179 @@ function renderLanguages(languages) {
+   });
+ }
+ 
+-// Heatmap generator (52 weeks x 7 days) with Month Labels & Monochromatic Royal Blue Scale
++// ---------------------------------------------------------------------------
++// Heatmap (Last 52 Weeks): royal-blue scale, real month labels, UTC-correct dates
++// ---------------------------------------------------------------------------
++// Single source of truth for intensity. Thresholds are monotonic, so a higher
++// submission count can never map to a darker shade.
++const HEAT_LEVELS = [
++  { level: 0, min: 0,  label: "No activity", cls: "heat-l0" }, // #111827
++  { level: 1, min: 1,  label: "Low",         cls: "heat-l1" }, // #1E3A8A  1-2
++  { level: 2, min: 3,  label: "Moderate",    cls: "heat-l2" }, // #1D4ED8  3-5
++  { level: 3, min: 6,  label: "High",        cls: "heat-l3" }, // #2563EB  6-10
++  { level: 4, min: 11, label: "Very high",   cls: "heat-l4" }, // #60A5FA  11+
++];
++
++function heatLevel(count) {
++  let lvl = 0;
++  for (const l of HEAT_LEVELS) if (count >= l.min) lvl = l.level;
++  return lvl;
++}
++
++const HEAT_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
++const HEAT_MIN_LABEL_GAP = 3; // columns between month labels (3 * 15 = 45 units for a ~20 unit label)
++
++function utcKey(d) {
++  return d.toISOString().slice(0, 10);
++}
++
++function fmtHeatDate(d) {
++  return `${HEAT_MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
++}
++
++function renderHeatmapLegend() {
++  const legend = document.getElementById("heatmapLegend");
++  if (!legend) return;
++  legend.innerHTML = "";
++  const mk = (cls, label) => {
++    const item = document.createElement("div");
++    item.style.cssText = "display:flex;align-items:center;gap:4px;";
++    const sw = document.createElement("div");
++    sw.className = `legend-swatch ${cls}`;
++    const t = document.createElement("span");
++    t.textContent = label;
++    item.append(sw, t);
++    return item;
++  };
++  const title = document.createElement("span");
++  title.style.fontWeight = "600";
++  title.textContent = "Activity:";
++  legend.appendChild(title);
++  HEAT_LEVELS.forEach((l) => legend.appendChild(mk(l.cls, l.label)));
++  legend.appendChild(mk("heat-missing", "No data"));
++}
++
+ function renderHeatmap(submissionCalendar) {
+   const wrapper = document.getElementById("heatmapWrapper");
+   if (!wrapper) return;
+   wrapper.innerHTML = "";
++  renderHeatmapLegend();
+ 
+-  // Parse submission count mapping by ISO YYYY-MM-DD
++  // LeetCode keys are UTC-midnight unix timestamps. Everything below uses UTC
++  // so a viewer in any timezone sees the same date -> count pairing.
+   const countMap = {};
+-  if (submissionCalendar) {
++  const hasData = !!submissionCalendar && Object.keys(submissionCalendar).length > 0;
++  if (hasData) {
+     for (const [ts, count] of Object.entries(submissionCalendar)) {
+-      const d = new Date(parseInt(ts, 10) * 1000);
+-      const key = d.toISOString().split("T")[0];
+-      countMap[key] = count;
++      countMap[utcKey(new Date(parseInt(ts, 10) * 1000))] = Number(count) || 0;
+     }
+   }
+ 
+-  // Calculate past 52 weeks (364 days) up to today
+-  const today = new Date();
++  // 364 days ending today (UTC), laid out in Sunday-start week columns.
++  const now = new Date();
++  const todayUtc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+   const days = [];
+-  for (let i = 363; i >= 0; i--) {
+-    const d = new Date(today);
+-    d.setDate(d.getDate() - i);
+-    days.push(d);
+-  }
++  for (let i = 363; i >= 0; i--) days.push(new Date(todayUtc - i * 86400000));
++
++  const rangeEl = document.getElementById("heatmapRange");
++  if (rangeEl) rangeEl.textContent = `${fmtHeatDate(days[0])} – ${fmtHeatDate(days[days.length - 1])}`;
+ 
+   const cellSize = 12;
+   const cellGap = 3;
+-  const leftPad = 28; // Margin for Mon/Wed/Fri weekday labels
+-  const topPad = 22;  // Margin for Month labels
++  const step = cellSize + cellGap;
++  const leftPad = 28; // weekday labels
++  const topPad = 22;  // month labels
+   const numWeeks = 53;
+-  const width = leftPad + numWeeks * (cellSize + cellGap) + 10;
+-  const height = topPad + 7 * (cellSize + cellGap) + 10;
++  const width = leftPad + numWeeks * step + 10;
++  const height = topPad + 7 * step + 10;
+ 
+-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
++  const NS = "http://www.w3.org/2000/svg";
++  const svg = document.createElementNS(NS, "svg");
+   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+   svg.setAttribute("width", "100%");
+   svg.setAttribute("height", height);
++  // Never shrink below natural size: the container scrolls instead, so month
++  // labels cannot collide on narrow screens.
++  svg.style.minWidth = `${width}px`;
+   svg.classList.add("heatmap-svg");
++  svg.setAttribute("role", "img");
++  svg.setAttribute("aria-label", "Submission heatmap for the last 52 weeks");
+ 
+   const tooltip = document.getElementById("custom-tooltip");
+ 
+-  // Get color scale from CSS variables with explicit Royal Blue monochromatic fallbacks
+-  const computedStyle = getComputedStyle(document.documentElement);
+-  const emptyColor = computedStyle.getPropertyValue("--heat-empty").trim() || "#111827";
+-  const lvl1Color = computedStyle.getPropertyValue("--heat-lvl1").trim() || "#1E3A8A";
+-  const lvl2Color = computedStyle.getPropertyValue("--heat-lvl2").trim() || "#1D4ED8";
+-  const lvl3Color = computedStyle.getPropertyValue("--heat-lvl3").trim() || "#2563EB";
+-  const lvl4Color = computedStyle.getPropertyValue("--heat-lvl4").trim() || "#60A5FA";
+-
+-  // Deterministic monotonic mapping: Higher count ALWAYS produces an equal or brighter shade
+-  function getLevelColor(count) {
+-    if (count === undefined || count === null || count === 0) return emptyColor; // Zero: #111827
+-    if (count <= 2) return lvl1Color;   // Low: #1E3A8A
+-    if (count <= 5) return lvl2Color;   // Moderate: #1D4ED8
+-    if (count <= 10) return lvl3Color;  // High: #2563EB
+-    return lvl4Color;                   // Very High: #60A5FA
+-  }
+-
+-  // Draw Weekday Labels (Mon, Wed, Fri) on the left
+-  const weekdays = [
+-    { label: "Mon", row: 1 },
+-    { label: "Wed", row: 3 },
+-    { label: "Fri", row: 5 }
+-  ];
+-  weekdays.forEach((wd) => {
+-    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
++  [["Mon", 1], ["Wed", 3], ["Fri", 5]].forEach(([label, row]) => {
++    const text = document.createElementNS(NS, "text");
+     text.setAttribute("x", 4);
+-    text.setAttribute("y", topPad + wd.row * (cellSize + cellGap) + 9);
++    text.setAttribute("y", topPad + row * step + 9);
+     text.setAttribute("class", "heat-day-label");
+-    text.textContent = wd.label;
++    text.textContent = label;
+     svg.appendChild(text);
+   });
+ 
+-  // Track month transitions across weeks to render accurate month headers
+-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+-  let lastMonth = -1;
+-  const monthLabels = [];
+-
+-  let currentWeek = 0;
+-  days.forEach((day, index) => {
+-    const dayOfWeek = day.getDay(); // 0 is Sun, 1 is Mon, ..., 6 is Sat
+-    const dateKey = day.toISOString().split("T")[0];
+-    const count = countMap[dateKey] !== undefined ? countMap[dateKey] : 0;
+-    const month = day.getMonth();
+-
+-    // Check if new month starts or first week
+-    if (day.getDate() <= 7 && month !== lastMonth && dayOfWeek === 1) {
+-      monthLabels.push({
+-        text: monthNames[month],
+-        weekIndex: currentWeek
+-      });
+-      lastMonth = month;
++  // Month labels come from the same column index the cells use.
++  const candidates = [];
++  let col = 0;
++  days.forEach((day, i) => {
++    const dow = day.getUTCDay(); // 0 = Sunday
++    const key = utcKey(day);
++    const count = hasData ? (countMap[key] || 0) : null;
++
++    if (day.getUTCDate() === 1) {
++      candidates.push({ col, month: day.getUTCMonth(), year: day.getUTCFullYear() });
++    } else if (i === 0) {
++      // Partial first month: label it only if the next month start leaves room
++      candidates.push({ col, month: day.getUTCMonth(), year: day.getUTCFullYear(), partial: true });
+     }
+ 
+-    const x = leftPad + currentWeek * (cellSize + cellGap);
+-    const y = topPad + dayOfWeek * (cellSize + cellGap);
+-
+-    const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+-    rect.setAttribute("x", x);
+-    rect.setAttribute("y", y);
++    const rect = document.createElementNS(NS, "rect");
++    rect.setAttribute("x", leftPad + col * step);
++    rect.setAttribute("y", topPad + dow * step);
+     rect.setAttribute("width", cellSize);
+     rect.setAttribute("height", cellSize);
+-    rect.setAttribute("fill", getLevelColor(count));
+-    rect.classList.add("heat-cell");
++    rect.setAttribute("class", `heat-cell ${count === null ? "heat-missing" : HEAT_LEVELS[heatLevel(count)].cls}`);
+     rect.setAttribute("tabindex", "0");
+-    rect.setAttribute("data-date", dateKey);
+-    rect.setAttribute("data-count", count);
++    rect.setAttribute("data-date", key);
++    rect.setAttribute("data-count", count === null ? "" : count);
++    rect.setAttribute("data-level", count === null ? "unavailable" : heatLevel(count));
++
++    const countLabel = count === null
++      ? "Data unavailable"
++      : count === 0 ? "No submissions" : `${count} submission${count > 1 ? "s" : ""}`;
++    rect.setAttribute("aria-label", `${countLabel} on ${key}`);
+ 
+-    rect.addEventListener("mouseenter", (e) => {
++    const show = (e) => {
++      if (!tooltip) return;
+       tooltip.style.display = "block";
+-      const countLabel = count === 0 ? "No submissions" : `${count} submission${count > 1 ? "s" : ""}`;
+-      tooltip.innerHTML = `<strong>${countLabel}</strong> on ${dateKey}`;
++      tooltip.innerHTML = `<strong>${countLabel}</strong> on ${key}`;
+       tooltip.style.left = `${e.clientX + 10}px`;
+       tooltip.style.top = `${e.clientY - 30}px`;
+-    });
+-
+-    rect.addEventListener("mouseleave", () => {
+-      tooltip.style.display = "none";
+-    });
+-
++    };
++    rect.addEventListener("mouseenter", show);
++    rect.addEventListener("mousemove", show);
++    rect.addEventListener("mouseleave", () => { if (tooltip) tooltip.style.display = "none"; });
+     svg.appendChild(rect);
+ 
+-    if (dayOfWeek === 6) {
+-      currentWeek++;
+-    }
++    if (dow === 6) col++;
++  });
++
++  // Drop labels that would overlap the previous kept one; a partial first
++  // month yields to the real month start that follows it.
++  const kept = [];
++  candidates.forEach((c, idx) => {
++    const next = candidates[idx + 1];
++    if (c.partial && next && next.col - c.col < HEAT_MIN_LABEL_GAP) return;
++    const prev = kept[kept.length - 1];
++    if (prev && c.col - prev.col < HEAT_MIN_LABEL_GAP) return;
++    kept.push(c);
+   });
+ 
+-  // Render Month Labels along top
+-  monthLabels.forEach((ml) => {
+-    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+-    text.setAttribute("x", leftPad + ml.weekIndex * (cellSize + cellGap));
++  kept.forEach((c) => {
++    const text = document.createElementNS(NS, "text");
++    text.setAttribute("x", leftPad + c.col * step);
+     text.setAttribute("y", 13);
+     text.setAttribute("class", "heat-month-label");
+-    text.textContent = ml.text;
++    text.setAttribute("data-month", `${c.year}-${String(c.month + 1).padStart(2, "0")}`);
++    text.textContent = HEAT_MONTHS[c.month];
+     svg.appendChild(text);
+   });
+ 
+@@ -539,6 +615,7 @@ function initRefresh() {
+ // On Page Load
+ document.addEventListener("DOMContentLoaded", () => {
+   initTheme();
++  initAvatarFallback();
+   initNavigation();
+   initSearch();
+   initRefresh();
+diff --git a/dashboard/index.html b/dashboard/index.html
+index 620b96b..6098b27 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -4,7 +4,7 @@
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>LeetCode Analytics Dashboard — smkyuzarsif</title>
+-  <link rel="stylesheet" href="styles.css?v=2.0.0">
++  <link rel="stylesheet" href="styles.css?v=2.1.0">
+ </head>
+ <body>
+   <div class="app-container">
+@@ -200,38 +200,16 @@
+           <div class="dash-card">
+             <div class="card-title-row">
+               <div class="card-title">
+-                <span>🗓️</span> Submission Calendar & Activity Heatmap
++                <span>🗓️</span> Heatmap (Last 52 Weeks)
+               </div>
+-              <div style="font-size: 0.8rem; color: var(--text-secondary);">Last 12 Months</div>
++              <div style="font-size: 0.8rem; color: var(--text-secondary);" id="heatmapRange">Last 52 weeks</div>
+             </div>
+ 
+             <div class="heatmap-container" id="heatmapWrapper">
+               <!-- Dynamically populated SVG Heatmap -->
+             </div>
+ 
+-            <div class="heatmap-legend" id="heatmapLegend">
+-              <span style="font-weight: 600;">Activity:</span>
+-              <div style="display: flex; align-items: center; gap: 4px;">
+-                <div class="legend-swatch" style="background: var(--heat-empty); border: 1px solid var(--heat-border);"></div>
+-                <span>No activity</span>
+-              </div>
+-              <div style="display: flex; align-items: center; gap: 4px;">
+-                <div class="legend-swatch" style="background: var(--heat-lvl1);"></div>
+-                <span>Low</span>
+-              </div>
+-              <div style="display: flex; align-items: center; gap: 4px;">
+-                <div class="legend-swatch" style="background: var(--heat-lvl2);"></div>
+-                <span>Moderate</span>
+-              </div>
+-              <div style="display: flex; align-items: center; gap: 4px;">
+-                <div class="legend-swatch" style="background: var(--heat-lvl3);"></div>
+-                <span>High</span>
+-              </div>
+-              <div style="display: flex; align-items: center; gap: 4px;">
+-                <div class="legend-swatch" style="background: var(--heat-lvl4);"></div>
+-                <span>Very high</span>
+-              </div>
+-            </div>
++            <div class="heatmap-legend" id="heatmapLegend"><!-- built by renderHeatmapLegend() --></div>
+           </div>
+ 
+           <!-- Contest Rating Trend Card -->
+@@ -334,6 +312,6 @@
+ 
+   <div id="custom-tooltip"></div>
+ 
+-  <script src="app.js?v=2.0.0"></script>
++  <script src="app.js?v=2.1.0"></script>
+ </body>
+ </html>
+diff --git a/dashboard/styles.css b/dashboard/styles.css
+index f3ac8fb..7820f31 100644
+--- a/dashboard/styles.css
++++ b/dashboard/styles.css
+@@ -22,13 +22,13 @@
+   --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+   --border-subtle: rgba(131, 34, 50, 0.4);
+ 
+-  /* Heatmap Colors (Dark Theme: Monochromatic Royal Blue Scale) */
+-  --heat-empty: #111827;       /* Zero submissions: near-black navy */
+-  --heat-lvl1: #1E3A8A;        /* Low activity: deep royal blue */
+-  --heat-lvl2: #1D4ED8;        /* Moderate activity: royal blue */
+-  --heat-lvl3: #2563EB;        /* High activity: vivid blue */
+-  --heat-lvl4: #60A5FA;        /* Very high activity: light electric blue */
+-  --heat-border: rgba(30, 58, 138, 0.4);
++  /* Heatmap Colors: royal-blue palette (zero = #111827, then 4 increasing blues) */
++  --heat-empty: #111827;
++  --heat-lvl1: #1E3A8A;
++  --heat-lvl2: #1D4ED8;
++  --heat-lvl3: #2563EB;
++  --heat-lvl4: #60A5FA;
++  --heat-border: rgba(96, 165, 250, 0.25);
+ 
+   /* Difficulties */
+   --diff-easy: #00b8a3;
+@@ -55,13 +55,13 @@
+   --card-shadow: 0 4px 20px 0 rgba(58, 46, 42, 0.06);
+   --border-subtle: #E9DDE5;
+ 
+-  /* Heatmap Colors (Light Theme: Royal Blue Scale on Light Surface with distinct empty border) */
+-  --heat-empty: #E2E8F0;       /* Zero submissions: clean subtle surface */
+-  --heat-lvl1: #1E3A8A;        /* Low activity: deep royal blue */
+-  --heat-lvl2: #1D4ED8;        /* Moderate activity: royal blue */
+-  --heat-lvl3: #2563EB;        /* High activity: vivid blue */
+-  --heat-lvl4: #60A5FA;        /* Very high activity: light electric blue */
+-  --heat-border: rgba(29, 78, 216, 0.25);
++  /* Heatmap Colors: identical royal-blue palette in both themes */
++  --heat-empty: #111827;
++  --heat-lvl1: #1E3A8A;
++  --heat-lvl2: #1D4ED8;
++  --heat-lvl3: #2563EB;
++  --heat-lvl4: #60A5FA;
++  --heat-border: rgba(96, 165, 250, 0.25);
+ 
+   /* Difficulties */
+   --diff-easy: #009688;
+@@ -487,10 +487,29 @@ body {
+   stroke-width: 0.75px;
+ }
+ 
+-.heat-cell:hover {
++.heat-cell:hover,
++.heat-cell:focus-visible {
+   stroke: var(--text-primary);
+   stroke-width: 1.5px;
++  outline: none;
++}
++
++/* Fill lives here only (no inline fill attributes), so the palette has one owner. */
++.heat-l0 { fill: var(--heat-empty); background: var(--heat-empty); }
++.heat-l1 { fill: var(--heat-lvl1);  background: var(--heat-lvl1); }
++.heat-l2 { fill: var(--heat-lvl2);  background: var(--heat-lvl2); }
++.heat-l3 { fill: var(--heat-lvl3);  background: var(--heat-lvl3); }
++.heat-l4 { fill: var(--heat-lvl4);  background: var(--heat-lvl4); }
++
++/* Data unavailable: visibly different from a real zero (hollow, dashed) */
++.heat-missing {
++  fill: transparent;
++  background: transparent;
++  stroke: var(--text-muted);
++  stroke-dasharray: 2 2;
++  stroke-width: 1px;
+ }
++.legend-swatch.heat-missing { border: 1px dashed var(--text-muted); }
+ 
+ .heat-month-label {
+   fill: var(--text-muted);
+@@ -515,13 +534,30 @@ body {
+   color: var(--text-muted);
+   flex-wrap: wrap;
+ }
+-}
+ 
+ .legend-swatch {
+   width: 12px;
+   height: 12px;
+   border-radius: 2px;
+ }
++.legend-swatch.heat-l0 { border: 1px solid var(--heat-border); }
++
++/* Badge icon with graceful text fallback */
++.badge-mark {
++  width: 58px;
++  height: 58px;
++  margin-bottom: 8px;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++}
++.badge-mark img { margin-bottom: 0; }
++.badge-mark-text {
++  border-radius: 50%;
++  border: 1px solid var(--border-color);
++  color: var(--text-muted);
++  font-size: 1.4rem;
++}
+ 
+ /* Contest Rating Chart */
+ .chart-container {
+diff --git a/profile_repo/README.md b/profile_repo/README.md
+index d28d457..9b25c8d 100644
+--- a/profile_repo/README.md
++++ b/profile_repo/README.md
+@@ -12,7 +12,7 @@
+   <a href="https://github.com/konaineleo" target="_blank">
+     <img src="https://img.shields.io/badge/GitHub-konaineleo-CE8964?style=for-the-badge&logo=github&logoColor=0B0033&labelColor=370031" alt="GitHub"/>
+   </a>
+-  <img src="https://img.shields.io/badge/Global_Rank-#339,788-EAF27C?style=for-the-badge&labelColor=370031" alt="Global Rank"/>
++  <img src="https://img.shields.io/badge/Global_Rank-%23339%2C788-EAF27C?style=for-the-badge&labelColor=370031" alt="Global Rank"/>
+   <img src="https://img.shields.io/badge/Contest_Rating-1530.99-CE8964?style=for-the-badge&labelColor=370031" alt="Rating"/>
+ 
+ </div>
+diff --git a/scripts/leetcode_tracker.py b/scripts/leetcode_tracker.py
+index 07123e7..fde4934 100644
+--- a/scripts/leetcode_tracker.py
++++ b/scripts/leetcode_tracker.py
+@@ -8,6 +8,7 @@ a sleek, modern portfolio-grade README.md and standalone Royal Blue SVG Heatmap.
+ import os
+ import sys
+ import json
++import urllib.parse
+ import ssl
+ import urllib.request
+ import urllib.error
+@@ -448,7 +449,7 @@ def generate_readme(data: dict, solutions: list[dict]) -> str:
+     lines.append("  <br/>\n")
+     lines.append(f"  <a href=\"https://leetcode.com/{LEETCODE_USERNAME}/\"><img src=\"https://img.shields.io/badge/LeetCode-{LEETCODE_USERNAME}-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6\" alt=\"LeetCode\"/></a>")
+     lines.append(f"  <a href=\"https://github.com/{GITHUB_USERNAME}\"><img src=\"https://img.shields.io/badge/GitHub-{GITHUB_USERNAME}-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6\" alt=\"GitHub\"/></a>")
+-    lines.append(f"  <img src=\"https://img.shields.io/badge/Global_Rank-{ranking_str}-a855f7?style=for-the-badge&labelColor=0d001a\" alt=\"Rank\"/>\n")
++    lines.append(f"  <img src=\"https://img.shields.io/badge/Global_Rank-{urllib.parse.quote(ranking_str, safe='')}-a855f7?style=for-the-badge&labelColor=0d001a\" alt=\"Rank\"/>\n")
+     lines.append("</div>\n")
+ 
+     lines.append("---\n")
+diff --git a/scripts/server.py b/scripts/server.py
+index 240d3f1..aa75669 100644
+--- a/scripts/server.py
++++ b/scripts/server.py
+@@ -82,6 +82,10 @@ query getFullProfile($username: String!) {
+ }
+ """
+ 
++PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
++DASHBOARD_DIR = os.path.join(PROJECT_DIR, "dashboard")
++DATA_DIR = os.path.join(PROJECT_DIR, "data")
++
+ _cache = {
+     "data": None,
+     "timestamp": 0
+@@ -252,13 +256,18 @@ class DashboardHandler(BaseHTTPRequestHandler):
+             return
+ 
+         # Static files serving
+-        dashboard_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "dashboard")
+-        req_path = self.path.split("?")[0].lstrip("/")
+-        if not req_path:
+-            req_path = "index.html"
++        # /data/* comes from the project's data/ folder (the dashboard folder has no
++        # data/ of its own locally); everything else comes from dashboard/.
++        req_path = self.path.split("?")[0].lstrip("/") or "index.html"
++        if req_path.startswith("data/"):
++            base_dir, rel = DATA_DIR, req_path[len("data/"):]
++        else:
++            base_dir, rel = DASHBOARD_DIR, req_path
+ 
+-        file_path = os.path.join(dashboard_dir, req_path)
+-        if os.path.exists(file_path) and os.path.isfile(file_path):
++        file_path = os.path.realpath(os.path.join(base_dir, rel))
++        # Refuse anything that resolves outside the served directory (../ traversal).
++        inside = file_path == base_dir or file_path.startswith(base_dir + os.sep)
++        if inside and os.path.isfile(file_path):
+             self.send_response(200)
+             mime_type, _ = mimetypes.guess_type(file_path)
+             self.send_header("Content-Type", mime_type or "text/plain")
+@@ -302,6 +311,7 @@ def run_server(port=3000):
+     print(f"=======================================================")
+     print(f"[*] LeetCode Dashboard Server running at http://localhost:{port}")
+     print(f"Tracking profile: @{LEETCODE_USERNAME}")
++    print(f"Serving dashboard from: {DASHBOARD_DIR}")
+     print(f"Press Ctrl+C to stop.")
+     print(f"=======================================================")
+     try:

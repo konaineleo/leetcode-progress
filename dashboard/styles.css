@@ -22,13 +22,13 @@
   --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
   --border-subtle: rgba(131, 34, 50, 0.4);
 
-  /* Heatmap Colors (Dark Theme: Monochromatic Royal Blue Scale) */
-  --heat-empty: #111827;       /* Zero submissions: near-black navy */
-  --heat-lvl1: #1E3A8A;        /* Low activity: deep royal blue */
-  --heat-lvl2: #1D4ED8;        /* Moderate activity: royal blue */
-  --heat-lvl3: #2563EB;        /* High activity: vivid blue */
-  --heat-lvl4: #60A5FA;        /* Very high activity: light electric blue */
-  --heat-border: rgba(30, 58, 138, 0.4);
+  /* Heatmap Colors: royal-blue palette (zero = #111827, then 4 increasing blues) */
+  --heat-empty: #111827;
+  --heat-lvl1: #1E3A8A;
+  --heat-lvl2: #1D4ED8;
+  --heat-lvl3: #2563EB;
+  --heat-lvl4: #60A5FA;
+  --heat-border: rgba(96, 165, 250, 0.25);
 
   /* Difficulties */
   --diff-easy: #00b8a3;
@@ -55,13 +55,13 @@
   --card-shadow: 0 4px 20px 0 rgba(58, 46, 42, 0.06);
   --border-subtle: #E9DDE5;
 
-  /* Heatmap Colors (Light Theme: Royal Blue Scale on Light Surface with distinct empty border) */
-  --heat-empty: #E2E8F0;       /* Zero submissions: clean subtle surface */
-  --heat-lvl1: #1E3A8A;        /* Low activity: deep royal blue */
-  --heat-lvl2: #1D4ED8;        /* Moderate activity: royal blue */
-  --heat-lvl3: #2563EB;        /* High activity: vivid blue */
-  --heat-lvl4: #60A5FA;        /* Very high activity: light electric blue */
-  --heat-border: rgba(29, 78, 216, 0.25);
+  /* Heatmap Colors: identical royal-blue palette in both themes */
+  --heat-empty: #111827;
+  --heat-lvl1: #1E3A8A;
+  --heat-lvl2: #1D4ED8;
+  --heat-lvl3: #2563EB;
+  --heat-lvl4: #60A5FA;
+  --heat-border: rgba(96, 165, 250, 0.25);
 
   /* Difficulties */
   --diff-easy: #009688;
@@ -487,10 +487,29 @@ body {
   stroke-width: 0.75px;
 }
 
-.heat-cell:hover {
+.heat-cell:hover,
+.heat-cell:focus-visible {
   stroke: var(--text-primary);
   stroke-width: 1.5px;
+  outline: none;
 }
+
+/* Fill lives here only (no inline fill attributes), so the palette has one owner. */
+.heat-l0 { fill: var(--heat-empty); background: var(--heat-empty); }
+.heat-l1 { fill: var(--heat-lvl1);  background: var(--heat-lvl1); }
+.heat-l2 { fill: var(--heat-lvl2);  background: var(--heat-lvl2); }
+.heat-l3 { fill: var(--heat-lvl3);  background: var(--heat-lvl3); }
+.heat-l4 { fill: var(--heat-lvl4);  background: var(--heat-lvl4); }
+
+/* Data unavailable: visibly different from a real zero (hollow, dashed) */
+.heat-missing {
+  fill: transparent;
+  background: transparent;
+  stroke: var(--text-muted);
+  stroke-dasharray: 2 2;
+  stroke-width: 1px;
+}
+.legend-swatch.heat-missing { border: 1px dashed var(--text-muted); }
 
 .heat-month-label {
   fill: var(--text-muted);
@@ -515,12 +534,29 @@ body {
   color: var(--text-muted);
   flex-wrap: wrap;
 }
-}
 
 .legend-swatch {
   width: 12px;
   height: 12px;
   border-radius: 2px;
+}
+.legend-swatch.heat-l0 { border: 1px solid var(--heat-border); }
+
+/* Badge icon with graceful text fallback */
+.badge-mark {
+  width: 58px;
+  height: 58px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.badge-mark img { margin-bottom: 0; }
+.badge-mark-text {
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 1.4rem;
 }
 
 /* Contest Rating Chart */

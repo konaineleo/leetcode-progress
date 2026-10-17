@@ -12,7 +12,7 @@
   <a href="https://github.com/konaineleo" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-konaineleo-CE8964?style=for-the-badge&logo=github&logoColor=0B0033&labelColor=370031" alt="GitHub"/>
   </a>
-  <img src="https://img.shields.io/badge/Global_Rank-#339,788-EAF27C?style=for-the-badge&labelColor=370031" alt="Global Rank"/>
+  <img src="https://img.shields.io/badge/Global_Rank-%23339%2C788-EAF27C?style=for-the-badge&labelColor=370031" alt="Global Rank"/>
   <img src="https://img.shields.io/badge/Contest_Rating-1530.99-CE8964?style=for-the-badge&labelColor=370031" alt="Rating"/>
 
 </div>

@@ -45,6 +45,18 @@ function setTheme(theme) {
   }
 }
 
+// Avatar: if the remote image cannot load, swap in a local initial instead of a broken-image icon
+function initAvatarFallback() {
+  const avatar = document.getElementById("userAvatar");
+  if (!avatar) return;
+  const letter = (USERNAME[0] || "?").toUpperCase();
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96"><rect width="96" height="96" rx="48" fill="#1E3A8A"/><text x="48" y="62" font-size="44" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#fff">${letter}</text></svg>`;
+  const fallbackSrc = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+  const apply = () => { if (avatar.src !== fallbackSrc) avatar.src = fallbackSrc; };
+  avatar.addEventListener("error", apply);
+  if (avatar.complete && avatar.naturalWidth === 0) apply(); // already failed before the listener attached
+}
+
 // Fetch Profile Data
 async function loadDashboardData(forceRefresh = false) {
   const endpoint = forceRefresh ? "/api/refresh" : "/api/profile";
@@ -176,7 +188,10 @@ function renderBadges(badges) {
   container.innerHTML = "";
 
   if (!badges || badges.length === 0) {
-    container.innerHTML = `<p style="font-size: 0.85rem; color: var(--text-muted);">No verified public badges.</p>`;
+    const p = document.createElement("p");
+    p.style.cssText = "font-size:0.85rem;color:var(--text-muted);";
+    p.textContent = "No verified public badges.";
+    container.appendChild(p);
     return;
   }
 
@@ -186,11 +201,33 @@ function renderBadges(badges) {
 
     const div = document.createElement("div");
     div.className = "badge-item";
-    div.innerHTML = `
-      <img src="${icon}" alt="${b.displayName}">
-      <div class="badge-name">${b.displayName}</div>
-      <div class="badge-date">${b.creationDate || "Earned"}</div>
-    `;
+
+    const mark = document.createElement("div");
+    mark.className = "badge-mark";
+    const fallback = () => {
+      // Neutral text mark: never a broken-image icon, never a fake LeetCode badge.
+      mark.className = "badge-mark badge-mark-text";
+      mark.textContent = "★";
+    };
+    if (icon) {
+      const img = document.createElement("img");
+      img.alt = b.displayName || "Badge";
+      img.referrerPolicy = "no-referrer";
+      img.addEventListener("error", () => { img.remove(); fallback(); });
+      img.src = icon;
+      mark.appendChild(img);
+    } else {
+      fallback();
+    }
+
+    const name = document.createElement("div");
+    name.className = "badge-name";
+    name.textContent = b.displayName || "Badge";
+    const date = document.createElement("div");
+    date.className = "badge-date";
+    date.textContent = b.creationDate || "Earned";
+
+    div.append(mark, name, date);
     container.appendChild(div);
   });
 }
@@ -224,140 +261,179 @@ function renderLanguages(languages) {
   });
 }
 
-// Heatmap generator (52 weeks x 7 days) with Month Labels & Monochromatic Royal Blue Scale
+// ---------------------------------------------------------------------------
+// Heatmap (Last 52 Weeks): royal-blue scale, real month labels, UTC-correct dates
+// ---------------------------------------------------------------------------
+// Single source of truth for intensity. Thresholds are monotonic, so a higher
+// submission count can never map to a darker shade.
+const HEAT_LEVELS = [
+  { level: 0, min: 0,  label: "No activity", cls: "heat-l0" }, // #111827
+  { level: 1, min: 1,  label: "Low",         cls: "heat-l1" }, // #1E3A8A  1-2
+  { level: 2, min: 3,  label: "Moderate",    cls: "heat-l2" }, // #1D4ED8  3-5
+  { level: 3, min: 6,  label: "High",        cls: "heat-l3" }, // #2563EB  6-10
+  { level: 4, min: 11, label: "Very high",   cls: "heat-l4" }, // #60A5FA  11+
+];
+
+function heatLevel(count) {
+  let lvl = 0;
+  for (const l of HEAT_LEVELS) if (count >= l.min) lvl = l.level;
+  return lvl;
+}
+
+const HEAT_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const HEAT_MIN_LABEL_GAP = 3; // columns between month labels (3 * 15 = 45 units for a ~20 unit label)
+
+function utcKey(d) {
+  return d.toISOString().slice(0, 10);
+}
+
+function fmtHeatDate(d) {
+  return `${HEAT_MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+}
+
+function renderHeatmapLegend() {
+  const legend = document.getElementById("heatmapLegend");
+  if (!legend) return;
+  legend.innerHTML = "";
+  const mk = (cls, label) => {
+    const item = document.createElement("div");
+    item.style.cssText = "display:flex;align-items:center;gap:4px;";
+    const sw = document.createElement("div");
+    sw.className = `legend-swatch ${cls}`;
+    const t = document.createElement("span");
+    t.textContent = label;
+    item.append(sw, t);
+    return item;
+  };
+  const title = document.createElement("span");
+  title.style.fontWeight = "600";
+  title.textContent = "Activity:";
+  legend.appendChild(title);
+  HEAT_LEVELS.forEach((l) => legend.appendChild(mk(l.cls, l.label)));
+  legend.appendChild(mk("heat-missing", "No data"));
+}
+
 function renderHeatmap(submissionCalendar) {
   const wrapper = document.getElementById("heatmapWrapper");
   if (!wrapper) return;
   wrapper.innerHTML = "";
+  renderHeatmapLegend();
 
-  // Parse submission count mapping by ISO YYYY-MM-DD
+  // LeetCode keys are UTC-midnight unix timestamps. Everything below uses UTC
+  // so a viewer in any timezone sees the same date -> count pairing.
   const countMap = {};
-  if (submissionCalendar) {
+  const hasData = !!submissionCalendar && Object.keys(submissionCalendar).length > 0;
+  if (hasData) {
     for (const [ts, count] of Object.entries(submissionCalendar)) {
-      const d = new Date(parseInt(ts, 10) * 1000);
-      const key = d.toISOString().split("T")[0];
-      countMap[key] = count;
+      countMap[utcKey(new Date(parseInt(ts, 10) * 1000))] = Number(count) || 0;
     }
   }
 
-  // Calculate past 52 weeks (364 days) up to today
-  const today = new Date();
+  // 364 days ending today (UTC), laid out in Sunday-start week columns.
+  const now = new Date();
+  const todayUtc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
   const days = [];
-  for (let i = 363; i >= 0; i--) {
-    const d = new Date(today);
-    d.setDate(d.getDate() - i);
-    days.push(d);
-  }
+  for (let i = 363; i >= 0; i--) days.push(new Date(todayUtc - i * 86400000));
+
+  const rangeEl = document.getElementById("heatmapRange");
+  if (rangeEl) rangeEl.textContent = `${fmtHeatDate(days[0])} – ${fmtHeatDate(days[days.length - 1])}`;
 
   const cellSize = 12;
   const cellGap = 3;
-  const leftPad = 28; // Margin for Mon/Wed/Fri weekday labels
-  const topPad = 22;  // Margin for Month labels
+  const step = cellSize + cellGap;
+  const leftPad = 28; // weekday labels
+  const topPad = 22;  // month labels
   const numWeeks = 53;
-  const width = leftPad + numWeeks * (cellSize + cellGap) + 10;
-  const height = topPad + 7 * (cellSize + cellGap) + 10;
+  const width = leftPad + numWeeks * step + 10;
+  const height = topPad + 7 * step + 10;
 
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(NS, "svg");
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   svg.setAttribute("width", "100%");
   svg.setAttribute("height", height);
+  // Never shrink below natural size: the container scrolls instead, so month
+  // labels cannot collide on narrow screens.
+  svg.style.minWidth = `${width}px`;
   svg.classList.add("heatmap-svg");
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", "Submission heatmap for the last 52 weeks");
 
   const tooltip = document.getElementById("custom-tooltip");
 
-  // Get color scale from CSS variables with explicit Royal Blue monochromatic fallbacks
-  const computedStyle = getComputedStyle(document.documentElement);
-  const emptyColor = computedStyle.getPropertyValue("--heat-empty").trim() || "#111827";
-  const lvl1Color = computedStyle.getPropertyValue("--heat-lvl1").trim() || "#1E3A8A";
-  const lvl2Color = computedStyle.getPropertyValue("--heat-lvl2").trim() || "#1D4ED8";
-  const lvl3Color = computedStyle.getPropertyValue("--heat-lvl3").trim() || "#2563EB";
-  const lvl4Color = computedStyle.getPropertyValue("--heat-lvl4").trim() || "#60A5FA";
-
-  // Deterministic monotonic mapping: Higher count ALWAYS produces an equal or brighter shade
-  function getLevelColor(count) {
-    if (count === undefined || count === null || count === 0) return emptyColor; // Zero: #111827
-    if (count <= 2) return lvl1Color;   // Low: #1E3A8A
-    if (count <= 5) return lvl2Color;   // Moderate: #1D4ED8
-    if (count <= 10) return lvl3Color;  // High: #2563EB
-    return lvl4Color;                   // Very High: #60A5FA
-  }
-
-  // Draw Weekday Labels (Mon, Wed, Fri) on the left
-  const weekdays = [
-    { label: "Mon", row: 1 },
-    { label: "Wed", row: 3 },
-    { label: "Fri", row: 5 }
-  ];
-  weekdays.forEach((wd) => {
-    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  [["Mon", 1], ["Wed", 3], ["Fri", 5]].forEach(([label, row]) => {
+    const text = document.createElementNS(NS, "text");
     text.setAttribute("x", 4);
-    text.setAttribute("y", topPad + wd.row * (cellSize + cellGap) + 9);
+    text.setAttribute("y", topPad + row * step + 9);
     text.setAttribute("class", "heat-day-label");
-    text.textContent = wd.label;
+    text.textContent = label;
     svg.appendChild(text);
   });
 
-  // Track month transitions across weeks to render accurate month headers
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  let lastMonth = -1;
-  const monthLabels = [];
+  // Month labels come from the same column index the cells use.
+  const candidates = [];
+  let col = 0;
+  days.forEach((day, i) => {
+    const dow = day.getUTCDay(); // 0 = Sunday
+    const key = utcKey(day);
+    const count = hasData ? (countMap[key] || 0) : null;
 
-  let currentWeek = 0;
-  days.forEach((day, index) => {
-    const dayOfWeek = day.getDay(); // 0 is Sun, 1 is Mon, ..., 6 is Sat
-    const dateKey = day.toISOString().split("T")[0];
-    const count = countMap[dateKey] !== undefined ? countMap[dateKey] : 0;
-    const month = day.getMonth();
-
-    // Check if new month starts or first week
-    if (day.getDate() <= 7 && month !== lastMonth && dayOfWeek === 1) {
-      monthLabels.push({
-        text: monthNames[month],
-        weekIndex: currentWeek
-      });
-      lastMonth = month;
+    if (day.getUTCDate() === 1) {
+      candidates.push({ col, month: day.getUTCMonth(), year: day.getUTCFullYear() });
+    } else if (i === 0) {
+      // Partial first month: label it only if the next month start leaves room
+      candidates.push({ col, month: day.getUTCMonth(), year: day.getUTCFullYear(), partial: true });
     }
 
-    const x = leftPad + currentWeek * (cellSize + cellGap);
-    const y = topPad + dayOfWeek * (cellSize + cellGap);
-
-    const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rect.setAttribute("x", x);
-    rect.setAttribute("y", y);
+    const rect = document.createElementNS(NS, "rect");
+    rect.setAttribute("x", leftPad + col * step);
+    rect.setAttribute("y", topPad + dow * step);
     rect.setAttribute("width", cellSize);
     rect.setAttribute("height", cellSize);
-    rect.setAttribute("fill", getLevelColor(count));
-    rect.classList.add("heat-cell");
+    rect.setAttribute("class", `heat-cell ${count === null ? "heat-missing" : HEAT_LEVELS[heatLevel(count)].cls}`);
     rect.setAttribute("tabindex", "0");
-    rect.setAttribute("data-date", dateKey);
-    rect.setAttribute("data-count", count);
+    rect.setAttribute("data-date", key);
+    rect.setAttribute("data-count", count === null ? "" : count);
+    rect.setAttribute("data-level", count === null ? "unavailable" : heatLevel(count));
 
-    rect.addEventListener("mouseenter", (e) => {
+    const countLabel = count === null
+      ? "Data unavailable"
+      : count === 0 ? "No submissions" : `${count} submission${count > 1 ? "s" : ""}`;
+    rect.setAttribute("aria-label", `${countLabel} on ${key}`);
+
+    const show = (e) => {
+      if (!tooltip) return;
       tooltip.style.display = "block";
-      const countLabel = count === 0 ? "No submissions" : `${count} submission${count > 1 ? "s" : ""}`;
-      tooltip.innerHTML = `<strong>${countLabel}</strong> on ${dateKey}`;
+      tooltip.innerHTML = `<strong>${countLabel}</strong> on ${key}`;
       tooltip.style.left = `${e.clientX + 10}px`;
       tooltip.style.top = `${e.clientY - 30}px`;
-    });
-
-    rect.addEventListener("mouseleave", () => {
-      tooltip.style.display = "none";
-    });
-
+    };
+    rect.addEventListener("mouseenter", show);
+    rect.addEventListener("mousemove", show);
+    rect.addEventListener("mouseleave", () => { if (tooltip) tooltip.style.display = "none"; });
     svg.appendChild(rect);
 
-    if (dayOfWeek === 6) {
-      currentWeek++;
-    }
+    if (dow === 6) col++;
   });
 
-  // Render Month Labels along top
-  monthLabels.forEach((ml) => {
-    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    text.setAttribute("x", leftPad + ml.weekIndex * (cellSize + cellGap));
+  // Drop labels that would overlap the previous kept one; a partial first
+  // month yields to the real month start that follows it.
+  const kept = [];
+  candidates.forEach((c, idx) => {
+    const next = candidates[idx + 1];
+    if (c.partial && next && next.col - c.col < HEAT_MIN_LABEL_GAP) return;
+    const prev = kept[kept.length - 1];
+    if (prev && c.col - prev.col < HEAT_MIN_LABEL_GAP) return;
+    kept.push(c);
+  });
+
+  kept.forEach((c) => {
+    const text = document.createElementNS(NS, "text");
+    text.setAttribute("x", leftPad + c.col * step);
     text.setAttribute("y", 13);
     text.setAttribute("class", "heat-month-label");
-    text.textContent = ml.text;
+    text.setAttribute("data-month", `${c.year}-${String(c.month + 1).padStart(2, "0")}`);
+    text.textContent = HEAT_MONTHS[c.month];
     svg.appendChild(text);
   });
 
@@ -539,6 +615,7 @@ function initRefresh() {
 // On Page Load
 document.addEventListener("DOMContentLoaded", () => {
   initTheme();
+  initAvatarFallback();
   initNavigation();
   initSearch();
   initRefresh();

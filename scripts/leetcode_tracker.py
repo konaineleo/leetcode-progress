@@ -8,6 +8,7 @@ a sleek, modern portfolio-grade README.md and standalone Royal Blue SVG Heatmap.
 import os
 import sys
 import json
+import urllib.parse
 import ssl
 import urllib.request
 import urllib.error
@@ -448,7 +449,7 @@ def generate_readme(data: dict, solutions: list[dict]) -> str:
     lines.append("  <br/>\n")
     lines.append(f"  <a href=\"https://leetcode.com/{LEETCODE_USERNAME}/\"><img src=\"https://img.shields.io/badge/LeetCode-{LEETCODE_USERNAME}-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6\" alt=\"LeetCode\"/></a>")
     lines.append(f"  <a href=\"https://github.com/{GITHUB_USERNAME}\"><img src=\"https://img.shields.io/badge/GitHub-{GITHUB_USERNAME}-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6\" alt=\"GitHub\"/></a>")
-    lines.append(f"  <img src=\"https://img.shields.io/badge/Global_Rank-{ranking_str}-a855f7?style=for-the-badge&labelColor=0d001a\" alt=\"Rank\"/>\n")
+    lines.append(f"  <img src=\"https://img.shields.io/badge/Global_Rank-{urllib.parse.quote(ranking_str, safe='')}-a855f7?style=for-the-badge&labelColor=0d001a\" alt=\"Rank\"/>\n")
     lines.append("</div>\n")
 
     lines.append("---\n")

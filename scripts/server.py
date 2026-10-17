@@ -82,6 +82,10 @@ query getFullProfile($username: String!) {
 }
 """
 
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+DASHBOARD_DIR = os.path.join(PROJECT_DIR, "dashboard")
+DATA_DIR = os.path.join(PROJECT_DIR, "data")
+
 _cache = {
     "data": None,
     "timestamp": 0
@@ -252,13 +256,18 @@ class DashboardHandler(BaseHTTPRequestHandler):
             return
 
         # Static files serving
-        dashboard_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "dashboard")
-        req_path = self.path.split("?")[0].lstrip("/")
-        if not req_path:
-            req_path = "index.html"
+        # /data/* comes from the project's data/ folder (the dashboard folder has no
+        # data/ of its own locally); everything else comes from dashboard/.
+        req_path = self.path.split("?")[0].lstrip("/") or "index.html"
+        if req_path.startswith("data/"):
+            base_dir, rel = DATA_DIR, req_path[len("data/"):]
+        else:
+            base_dir, rel = DASHBOARD_DIR, req_path
 
-        file_path = os.path.join(dashboard_dir, req_path)
-        if os.path.exists(file_path) and os.path.isfile(file_path):
+        file_path = os.path.realpath(os.path.join(base_dir, rel))
+        # Refuse anything that resolves outside the served directory (../ traversal).
+        inside = file_path == base_dir or file_path.startswith(base_dir + os.sep)
+        if inside and os.path.isfile(file_path):
             self.send_response(200)
             mime_type, _ = mimetypes.guess_type(file_path)
             self.send_header("Content-Type", mime_type or "text/plain")
@@ -302,6 +311,7 @@ def run_server(port=3000):
     print(f"=======================================================")
     print(f"[*] LeetCode Dashboard Server running at http://localhost:{port}")
     print(f"Tracking profile: @{LEETCODE_USERNAME}")
+    print(f"Serving dashboard from: {DASHBOARD_DIR}")
     print(f"Press Ctrl+C to stop.")
     print(f"=======================================================")
     try:

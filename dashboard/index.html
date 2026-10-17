@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LeetCode Analytics Dashboard — smkyuzarsif</title>
-  <link rel="stylesheet" href="styles.css?v=2.0.0">
+  <link rel="stylesheet" href="styles.css?v=2.1.0">
 </head>
 <body>
   <div class="app-container">
@@ -200,38 +200,16 @@
           <div class="dash-card">
             <div class="card-title-row">
               <div class="card-title">
-                <span>🗓️</span> Submission Calendar & Activity Heatmap
+                <span>🗓️</span> Heatmap (Last 52 Weeks)
               </div>
-              <div style="font-size: 0.8rem; color: var(--text-secondary);">Last 12 Months</div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);" id="heatmapRange">Last 52 weeks</div>
             </div>
 
             <div class="heatmap-container" id="heatmapWrapper">
               <!-- Dynamically populated SVG Heatmap -->
             </div>
 
-            <div class="heatmap-legend" id="heatmapLegend">
-              <span style="font-weight: 600;">Activity:</span>
-              <div style="display: flex; align-items: center; gap: 4px;">
-                <div class="legend-swatch" style="background: var(--heat-empty); border: 1px solid var(--heat-border);"></div>
-                <span>No activity</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 4px;">
-                <div class="legend-swatch" style="background: var(--heat-lvl1);"></div>
-                <span>Low</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 4px;">
-                <div class="legend-swatch" style="background: var(--heat-lvl2);"></div>
-                <span>Moderate</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 4px;">
-                <div class="legend-swatch" style="background: var(--heat-lvl3);"></div>
-                <span>High</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 4px;">
-                <div class="legend-swatch" style="background: var(--heat-lvl4);"></div>
-                <span>Very high</span>
-              </div>
-            </div>
+            <div class="heatmap-legend" id="heatmapLegend"><!-- built by renderHeatmapLegend() --></div>
           </div>
 
           <!-- Contest Rating Trend Card -->
@@ -334,6 +312,6 @@
 
   <div id="custom-tooltip"></div>
 
-  <script src="app.js?v=2.0.0"></script>
+  <script src="app.js?v=2.1.0"></script>
 </body>
 </html>
