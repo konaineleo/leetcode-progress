@@ -32,14 +32,16 @@
 
   <br/><br/>
 
-  <!-- SIDE-BY-SIDE CARDS: HEATMAP + CONTEST RATING DASHBOARD -->
+  <!-- MONOCHROMATIC ROYAL BLUE LEETCODE HEATMAP -->
+  <a href="https://leetcode.com/smkyuzarsif/" target="_blank">
+    <img src="leetcode-heatmap.svg" alt="LeetCode Submission Heatmap (Royal Blue Scale)" width="100%"/>
+  </a>
+
+  <br/><br/>
+
+  <!-- CONTEST RATING DASHBOARD -->
   <table border="0" cellspacing="8" cellpadding="0">
     <tr>
-      <td align="center">
-        <a href="https://leetcode.com/smkyuzarsif/" target="_blank">
-          <img src="https://leetcard.jacoblin.cool/smkyuzarsif?theme=dark&font=JetBrains+Mono&ext=heatmap&border=0&radius=12" alt="LeetCode Submission Heatmap"/>
-        </a>
-      </td>
       <td align="center">
         <a href="https://leetcode.com/smkyuzarsif/" target="_blank">
           <img src="https://leetcard.jacoblin.cool/smkyuzarsif?theme=dark&font=JetBrains+Mono&ext=contest&border=0&radius=12" alt="LeetCode Contest Rating Dashboard"/>

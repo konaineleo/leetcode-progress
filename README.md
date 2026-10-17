@@ -24,13 +24,15 @@
 
   <br/><br/>
 
+  <!-- Monochromatic Royal Blue Heatmap Generated Deterministically -->
+  <a href="https://leetcode.com/smkyuzarsif/">
+    <img src="assets/leetcode-heatmap.svg" alt="LeetCode Submission Heatmap (Royal Blue Scale)" width="100%"/>
+  </a>
+
+  <br/><br/>
+
   <table border="0" cellspacing="8" cellpadding="0">
     <tr>
-      <td align="center">
-        <a href="https://leetcode.com/smkyuzarsif/">
-          <img src="https://leetcard.jacoblin.cool/smkyuzarsif?theme=dark&font=JetBrains+Mono&ext=heatmap&border=0&radius=12" alt="LeetCode Heatmap"/>
-        </a>
-      </td>
       <td align="center">
         <a href="https://leetcode.com/smkyuzarsif/">
           <img src="https://leetcard.jacoblin.cool/smkyuzarsif?theme=dark&font=JetBrains+Mono&ext=contest&border=0&radius=12" alt="Contest Rating Dashboard"/>
@@ -72,7 +74,7 @@
 | **Contests Attended** | **22** | Live weekly & biweekly contests |
 | **Streak Tracking** | **2 days** (Current) | **144 days** (Longest active) |
 | **Earned Badges** | **3** | Special challenge medals |
-| **Last Synced** | `October 17, 2026 at 02:38 UTC` | Automated via GitHub Actions |
+| **Last Synced** | `October 17, 2026 at 08:11 UTC` | Automated via GitHub Actions |
 
 ## 🎯 Difficulty Breakdown
 
@@ -111,6 +113,6 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 ### ⚙️ Automation & Architecture
 
 - **Data Pipeline**: Automated live queries via official LeetCode GraphQL API
-- **Visual Cards**: Dynamic real-time dark-mode cards with `leetcard` & high-contrast `ghchart`
+- **Royal Blue Heatmap**: High-contrast monochromatic SVG rendered directly in repository
 - **Automated Workflow**: Scheduled GitHub Actions cron runner with idempotent commit handling
 - **Repository Owner**: [@konaineleo](https://github.com/konaineleo)

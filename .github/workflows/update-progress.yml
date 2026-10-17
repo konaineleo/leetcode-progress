@@ -40,10 +40,10 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Check if README.md or data/progress.json were changed
-          if git status --porcelain | grep -E '(README\.md|data/progress\.json)'; then
-            echo "Changes detected in progress or README. Committing..."
-            git add README.md data/progress.json
+          # Check if README.md, data/progress.json or assets were changed
+          if git status --porcelain | grep -E '(README\.md|data/progress\.json|assets/)'; then
+            echo "Changes detected in progress, heatmap, or README. Committing..."
+            git add README.md data/progress.json assets/
             git commit -m "chore(tracker): automated leetcode progress update [skip ci]"
             git push
           else

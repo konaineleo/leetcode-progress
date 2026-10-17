@@ -2,8 +2,7 @@
 LeetCode Progress Tracker (Standard Library Edition - Zero Dependencies)
 Fetches live statistics and activity from LeetCode public GraphQL API,
 records history, scans for locally categorized solutions, and regenerates
-a sleek, modern portfolio-grade README.md inspired by modern high-contrast
-developer profiles (e.g. Muqeeth47 aesthetic + full automation).
+a sleek, modern portfolio-grade README.md and standalone Royal Blue SVG Heatmap.
 """
 
 import os
@@ -23,6 +22,8 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 DATA_FILE = os.path.join(DATA_DIR, "progress.json")
 SOLUTIONS_DIR = os.path.join(BASE_DIR, "solutions")
 README_FILE = os.path.join(BASE_DIR, "README.md")
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
+HEATMAP_SVG_FILE = os.path.join(ASSETS_DIR, "leetcode-heatmap.svg")
 
 GRAPHQL_URL = "https://leetcode.com/graphql"
 
@@ -204,6 +205,107 @@ def calculate_streak(submission_calendar: dict) -> tuple[int, int]:
     return active_current_streak, max_streak
 
 
+def generate_heatmap_svg(calendar_dict: dict) -> str:
+    """Generates a high-contrast monochromatic Royal Blue submission heatmap SVG for GitHub READMEs."""
+    count_map = {}
+    for ts_str, count in calendar_dict.items():
+        try:
+            dt = datetime.fromtimestamp(int(ts_str), tz=timezone.utc).date()
+            count_map[dt.isoformat()] = count
+        except (ValueError, OSError):
+            continue
+
+    today = datetime.now(timezone.utc).date()
+    days = [today - timedelta(days=i) for i in range(363, -1, -1)]
+
+    cell_size = 12
+    cell_gap = 3
+    left_pad = 34
+    top_pad = 28
+    num_weeks = 53
+    width = left_pad + num_weeks * (cell_size + cell_gap) + 14
+    height = top_pad + 7 * (cell_size + cell_gap) + 40
+
+    def get_color(count: int) -> str:
+        if not count or count == 0:
+            return "#111827"  # Zero submissions: near-black navy
+        elif count <= 2:
+            return "#1E3A8A"  # Low activity: deep royal blue
+        elif count <= 5:
+            return "#1D4ED8"  # Moderate activity: royal blue
+        elif count <= 10:
+            return "#2563EB"  # High activity: vivid blue
+        else:
+            return "#60A5FA"  # Very high activity: light electric blue
+
+    lines = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" style="background-color: #0B0033; border: 1px solid #832232; border-radius: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Lucida Sans\', \'Lucida Grande\', Segoe UI, sans-serif;">',
+        "  <style>",
+        "    .month-label { fill: #C8B9CC; font-size: 10px; font-weight: 600; }",
+        "    .day-label { fill: #8E7A94; font-size: 9px; font-weight: 500; }",
+        "    .legend-text { fill: #C8B9CC; font-size: 10px; font-weight: 500; }",
+        "    .cell { rx: 2.5px; ry: 2.5px; stroke: rgba(30, 58, 138, 0.45); stroke-width: 0.75px; }",
+        "  </style>",
+    ]
+
+    # Weekday labels
+    for wd, row_idx in [("Mon", 1), ("Wed", 3), ("Fri", 5)]:
+        y = top_pad + row_idx * (cell_size + cell_gap) + 9
+        lines.append(f'  <text x="6" y="{y}" class="day-label">{wd}</text>')
+
+    # Month labels calculation
+    month_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    last_month = -1
+    month_labels = []
+
+    current_week = 0
+    for day in days:
+        day_of_week = (day.weekday() + 1) % 7  # 0 is Sunday, 1 is Monday ...
+        date_str = day.isoformat()
+        count = count_map.get(date_str, 0)
+        month = day.month - 1
+
+        if day.day <= 7 and month != last_month and day_of_week == 1:
+            month_labels.append((month_names[month], current_week))
+            last_month = month
+
+        x = left_pad + current_week * (cell_size + cell_gap)
+        y = top_pad + day_of_week * (cell_size + cell_gap)
+        fill = get_color(count)
+        tip = f"{count} submission{'s' if count != 1 else ''} on {date_str}" if count > 0 else f"No submissions on {date_str}"
+        lines.append(f'  <rect x="{x}" y="{y}" width="{cell_size}" height="{cell_size}" fill="{fill}" class="cell"><title>{tip}</title></rect>')
+
+        if day_of_week == 6:
+            current_week += 1
+
+    # Render month labels along top
+    for m_name, w_idx in month_labels:
+        mx = left_pad + w_idx * (cell_size + cell_gap)
+        lines.append(f'  <text x="{mx}" y="18" class="month-label">{m_name}</text>')
+
+    # Legend at bottom right
+    leg_y = top_pad + 7 * (cell_size + cell_gap) + 16
+    lines.append(f'  <g transform="translate({width - 340}, {leg_y})">')
+    lines.append('    <text x="0" y="10" class="legend-text" font-weight="bold">Activity:</text>')
+    swatches = [
+        ("No activity", "#111827", True),
+        ("Low", "#1E3A8A", False),
+        ("Moderate", "#1D4ED8", False),
+        ("High", "#2563EB", False),
+        ("Very high", "#60A5FA", False),
+    ]
+    cur_x = 55
+    for label, col, has_border in swatches:
+        border_attr = ' stroke="rgba(30, 58, 138, 0.6)" stroke-width="1"' if has_border else ""
+        lines.append(f'    <rect x="{cur_x}" y="0" width="11" height="11" rx="2" fill="{col}"{border_attr}/>')
+        lines.append(f'    <text x="{cur_x + 15}" y="9" class="legend-text">{label}</text>')
+        cur_x += len(label) * 6 + 26
+    lines.append("  </g>")
+
+    lines.append("</svg>")
+    return "\n".join(lines)
+
+
 def load_previous_progress() -> dict:
     if os.path.exists(DATA_FILE):
         try:
@@ -351,7 +453,7 @@ def generate_readme(data: dict, solutions: list[dict]) -> str:
 
     lines.append("---\n")
 
-    # High-Contrast Stat Badges Row (muqeeth47 aesthetic)
+    # High-Contrast Stat Badges Row
     lines.append("## ⚡ LeetCode Progress\n")
     lines.append("<div align=\"center\">\n")
     lines.append(f"  <img src=\"https://img.shields.io/badge/Solved-{total_solved}-c084fc?style=for-the-badge&labelColor=0d001a\" alt=\"Solved\"/>")
@@ -361,14 +463,16 @@ def generate_readme(data: dict, solutions: list[dict]) -> str:
     lines.append(f"  <img src=\"https://img.shields.io/badge/Rating-{contest_rating}-a855f7?style=for-the-badge&labelColor=0d001a\" alt=\"Rating\"/>\n")
     lines.append("  <br/><br/>\n")
 
-    # Dynamic Visual Cards: Heatmap + Contest Rating Dashboard
+    # Embedded High-Contrast Monochromatic Royal Blue Heatmap (Directly rendered in GitHub)
+    lines.append("  <!-- Monochromatic Royal Blue Heatmap Generated Deterministically -->")
+    lines.append(f"  <a href=\"https://leetcode.com/{LEETCODE_USERNAME}/\">")
+    lines.append("    <img src=\"assets/leetcode-heatmap.svg\" alt=\"LeetCode Submission Heatmap (Royal Blue Scale)\" width=\"100%\"/>")
+    lines.append("  </a>\n")
+    lines.append("  <br/><br/>\n")
+
+    # Contest Rating Dashboard Card
     lines.append("  <table border=\"0\" cellspacing=\"8\" cellpadding=\"0\">")
     lines.append("    <tr>")
-    lines.append("      <td align=\"center\">")
-    lines.append(f"        <a href=\"https://leetcode.com/{LEETCODE_USERNAME}/\">")
-    lines.append(f"          <img src=\"https://leetcard.jacoblin.cool/{LEETCODE_USERNAME}?theme=dark&font=JetBrains+Mono&ext=heatmap&border=0&radius=12\" alt=\"LeetCode Heatmap\"/>")
-    lines.append("        </a>")
-    lines.append("      </td>")
     lines.append("      <td align=\"center\">")
     lines.append(f"        <a href=\"https://leetcode.com/{LEETCODE_USERNAME}/\">")
     lines.append(f"          <img src=\"https://leetcard.jacoblin.cool/{LEETCODE_USERNAME}?theme=dark&font=JetBrains+Mono&ext=contest&border=0&radius=12\" alt=\"Contest Rating Dashboard\"/>")
@@ -481,7 +585,7 @@ def generate_readme(data: dict, solutions: list[dict]) -> str:
     lines.append("### ⚙️ Automation & Architecture\n")
     lines.append(
         "- **Data Pipeline**: Automated live queries via official LeetCode GraphQL API\n"
-        "- **Visual Cards**: Dynamic real-time dark-mode cards with `leetcard` & high-contrast `ghchart`\n"
+        "- **Royal Blue Heatmap**: High-contrast monochromatic SVG rendered directly in repository\n"
         "- **Automated Workflow**: Scheduled GitHub Actions cron runner with idempotent commit handling\n"
         f"- **Repository Owner**: [@{GITHUB_USERNAME}](https://github.com/{GITHUB_USERNAME})\n"
     )
@@ -510,6 +614,13 @@ def main():
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(updated_data, f, indent=2, ensure_ascii=False)
     print(f"Updated {DATA_FILE}")
+
+    # Generate standalone SVG Heatmap in exact Royal Blue scale
+    os.makedirs(ASSETS_DIR, exist_ok=True)
+    heatmap_svg = generate_heatmap_svg(current_stats.get("submissionCalendar", {}))
+    with open(HEATMAP_SVG_FILE, "w", encoding="utf-8") as f:
+        f.write(heatmap_svg)
+    print(f"Generated {HEATMAP_SVG_FILE}")
 
     # Generate README
     readme_content = generate_readme(updated_data, solutions)
