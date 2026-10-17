@@ -22,13 +22,13 @@
   --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
   --border-subtle: rgba(131, 34, 50, 0.4);
 
-  /* Heatmap Colors: royal-blue palette (zero = #111827, then 4 increasing blues) */
-  --heat-empty: #111827;
-  --heat-lvl1: #1E3A8A;
-  --heat-lvl2: #1D4ED8;
-  --heat-lvl3: #2563EB;
-  --heat-lvl4: #60A5FA;
-  --heat-border: rgba(96, 165, 250, 0.25);
+  /* Heatmap Colors: High-Contrast Amber/Gold Glow matching reference */
+  --heat-empty: #120A1E;
+  --heat-lvl1: #6B3410;
+  --heat-lvl2: #B45309;
+  --heat-lvl3: #EA580C;
+  --heat-lvl4: #FDE047;
+  --heat-border: #2A1B3D;
 
   /* Difficulties */
   --diff-easy: #00b8a3;
@@ -55,13 +55,13 @@
   --card-shadow: 0 4px 20px 0 rgba(58, 46, 42, 0.06);
   --border-subtle: #E9DDE5;
 
-  /* Heatmap Colors: identical royal-blue palette in both themes */
-  --heat-empty: #111827;
-  --heat-lvl1: #1E3A8A;
-  --heat-lvl2: #1D4ED8;
-  --heat-lvl3: #2563EB;
-  --heat-lvl4: #60A5FA;
-  --heat-border: rgba(96, 165, 250, 0.25);
+  /* Heatmap Colors: warm golden amber on light surface */
+  --heat-empty: #F1F5F9;
+  --heat-lvl1: #78350F;
+  --heat-lvl2: #B45309;
+  --heat-lvl3: #EA580C;
+  --heat-lvl4: #EAB308;
+  --heat-border: #CBD5E1;
 
   /* Difficulties */
   --diff-easy: #009688;

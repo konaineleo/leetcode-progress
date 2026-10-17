@@ -207,7 +207,7 @@ def calculate_streak(submission_calendar: dict) -> tuple[int, int]:
 
 
 def generate_heatmap_svg(calendar_dict: dict) -> str:
-    """Generates a high-contrast monochromatic Royal Blue submission heatmap SVG for GitHub READMEs."""
+    """Generates the high-contrast Amber/Gold LeetCode submission heatmap SVG matching exact reference."""
     count_map = {}
     for ts_str, count in calendar_dict.items():
         try:
@@ -219,40 +219,46 @@ def generate_heatmap_svg(calendar_dict: dict) -> str:
     today = datetime.now(timezone.utc).date()
     days = [today - timedelta(days=i) for i in range(363, -1, -1)]
 
-    cell_size = 12
-    cell_gap = 3
-    left_pad = 34
-    top_pad = 28
+    cell_size = 13
+    cell_gap = 3.5
+    left_pad = 42
+    top_pad = 32
     num_weeks = 53
-    width = left_pad + num_weeks * (cell_size + cell_gap) + 14
-    height = top_pad + 7 * (cell_size + cell_gap) + 40
+    width = left_pad + num_weeks * (cell_size + cell_gap) + 16
+    height = top_pad + 7 * (cell_size + cell_gap) + 46
 
+    # Exact palette matching reference:
+    # Zero: #120A1E (very dark purple-navy with subtle glowing #352044 outline)
+    # Low: #6B3410 (deep amber brown)
+    # Moderate: #B45309 (vivid warm amber)
+    # High: #EA580C (bright golden orange)
+    # Very high: #FDE047 (light glowing gold / soft butter yellow)
     def get_color(count: int) -> str:
         if not count or count == 0:
-            return "#111827"  # Zero submissions: near-black navy
+            return "#120A1E"
         elif count <= 2:
-            return "#1E3A8A"  # Low activity: deep royal blue
+            return "#6B3410"
         elif count <= 5:
-            return "#1D4ED8"  # Moderate activity: royal blue
+            return "#B45309"
         elif count <= 10:
-            return "#2563EB"  # High activity: vivid blue
+            return "#EA580C"
         else:
-            return "#60A5FA"  # Very high activity: light electric blue
+            return "#FDE047"
 
     lines = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" style="background-color: #0B0033; border: 1px solid #832232; border-radius: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Lucida Sans\', \'Lucida Grande\', Segoe UI, sans-serif;">',
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" style="background-color: #080112; border: 1.5px solid #2A0845; border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif;">',
         "  <style>",
-        "    .month-label { fill: #C8B9CC; font-size: 10px; font-weight: 600; }",
-        "    .day-label { fill: #8E7A94; font-size: 9px; font-weight: 500; }",
-        "    .legend-text { fill: #C8B9CC; font-size: 10px; font-weight: 500; }",
-        "    .cell { rx: 2.5px; ry: 2.5px; stroke: rgba(30, 58, 138, 0.45); stroke-width: 0.75px; }",
+        "    .month-label { fill: #E2E8F0; font-size: 11px; font-weight: 700; }",
+        "    .day-label { fill: #94A3B8; font-size: 10px; font-weight: 600; }",
+        "    .legend-text { fill: #E2E8F0; font-size: 11px; font-weight: 600; }",
+        "    .cell { rx: 3.5px; ry: 3.5px; }",
         "  </style>",
     ]
 
-    # Weekday labels
+    # Weekday labels (Mon, Wed, Fri)
     for wd, row_idx in [("Mon", 1), ("Wed", 3), ("Fri", 5)]:
-        y = top_pad + row_idx * (cell_size + cell_gap) + 9
-        lines.append(f'  <text x="6" y="{y}" class="day-label">{wd}</text>')
+        y = top_pad + row_idx * (cell_size + cell_gap) + 10
+        lines.append(f'  <text x="8" y="{y}" class="day-label">{wd}</text>')
 
     # Month labels calculation
     month_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -273,8 +279,9 @@ def generate_heatmap_svg(calendar_dict: dict) -> str:
         x = left_pad + current_week * (cell_size + cell_gap)
         y = top_pad + day_of_week * (cell_size + cell_gap)
         fill = get_color(count)
+        stroke_attr = ' stroke="#2A1B3D" stroke-width="1.2"' if (not count or count == 0) else ''
         tip = f"{count} submission{'s' if count != 1 else ''} on {date_str}" if count > 0 else f"No submissions on {date_str}"
-        lines.append(f'  <rect x="{x}" y="{y}" width="{cell_size}" height="{cell_size}" fill="{fill}" class="cell"><title>{tip}</title></rect>')
+        lines.append(f'  <rect x="{x}" y="{y}" width="{cell_size}" height="{cell_size}" fill="{fill}"{stroke_attr} class="cell"><title>{tip}</title></rect>')
 
         if day_of_week == 6:
             current_week += 1
@@ -282,25 +289,25 @@ def generate_heatmap_svg(calendar_dict: dict) -> str:
     # Render month labels along top
     for m_name, w_idx in month_labels:
         mx = left_pad + w_idx * (cell_size + cell_gap)
-        lines.append(f'  <text x="{mx}" y="18" class="month-label">{m_name}</text>')
+        lines.append(f'  <text x="{mx}" y="20" class="month-label">{m_name}</text>')
 
     # Legend at bottom right
-    leg_y = top_pad + 7 * (cell_size + cell_gap) + 16
-    lines.append(f'  <g transform="translate({width - 340}, {leg_y})">')
-    lines.append('    <text x="0" y="10" class="legend-text" font-weight="bold">Activity:</text>')
+    leg_y = top_pad + 7 * (cell_size + cell_gap) + 18
+    lines.append(f'  <g transform="translate({width - 390}, {leg_y})">')
+    lines.append('    <text x="0" y="11" class="legend-text">Activity:</text>')
     swatches = [
-        ("No activity", "#111827", True),
-        ("Low", "#1E3A8A", False),
-        ("Moderate", "#1D4ED8", False),
-        ("High", "#2563EB", False),
-        ("Very high", "#60A5FA", False),
+        ("No activity", "#120A1E", True),
+        ("Low", "#6B3410", False),
+        ("Moderate", "#B45309", False),
+        ("High", "#EA580C", False),
+        ("Very high", "#FDE047", False),
     ]
-    cur_x = 55
+    cur_x = 60
     for label, col, has_border in swatches:
-        border_attr = ' stroke="rgba(30, 58, 138, 0.6)" stroke-width="1"' if has_border else ""
-        lines.append(f'    <rect x="{cur_x}" y="0" width="11" height="11" rx="2" fill="{col}"{border_attr}/>')
-        lines.append(f'    <text x="{cur_x + 15}" y="9" class="legend-text">{label}</text>')
-        cur_x += len(label) * 6 + 26
+        border_attr = ' stroke="#2A1B3D" stroke-width="1.2"' if has_border else ""
+        lines.append(f'    <rect x="{cur_x}" y="0" width="{cell_size}" height="{cell_size}" rx="3.5" fill="{col}"{border_attr}/>')
+        lines.append(f'    <text x="{cur_x + 18}" y="10" class="legend-text">{label}</text>')
+        cur_x += len(label) * 6.5 + 30
     lines.append("  </g>")
 
     lines.append("</svg>")
