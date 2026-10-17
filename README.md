@@ -24,9 +24,9 @@
 
   <br/><br/>
 
-  <!-- Monochromatic Royal Blue Heatmap Generated Deterministically -->
+  <!-- Amber-Gold Glow LeetCode Submission Heatmap on Obsidian Purple -->
   <a href="https://leetcode.com/smkyuzarsif/">
-    <img src="assets/leetcode-heatmap.svg" alt="LeetCode Submission Heatmap (Royal Blue Scale)" width="100%"/>
+    <img src="assets/leetcode-heatmap.svg" alt="LeetCode Submission Heatmap (Amber Gold Glow)" width="100%"/>
   </a>
 
   <br/><br/>
@@ -59,6 +59,14 @@
     </tr>
   </table>
 
+</div>
+
+---
+
+## 🛠️ Technical Profile
+
+<div align="center">
+  <img src="assets/tech-stack.svg" alt="Technical Profile — Tech Stack" width="100%"/>
 </div>
 
 ---

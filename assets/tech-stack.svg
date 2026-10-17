@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 540" width="860" height="540" font-family="'Segoe UI', 'JetBrains Mono', 'Consolas', monospace">
+  <defs>
+    <!-- Gold radial gradient for top-left ornament -->
+    <radialGradient id="goldOrn" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="55%" stop-color="#B45309"/>
+      <stop offset="100%" stop-color="#6B3410" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Grey radial gradient for bottom-right ornament -->
+    <radialGradient id="greyOrn" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9CA3AF"/>
+      <stop offset="55%" stop-color="#4B5563"/>
+      <stop offset="100%" stop-color="#1F2937" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Subtle red glow for DSA highlight -->
+    <filter id="redGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ═══ BACKGROUND ═══ -->
+  <rect width="860" height="540" fill="#000000" rx="8"/>
+
+  <!-- ═══ PURPLE BORDER ═══ -->
+  <rect x="10" y="10" width="840" height="520" fill="none" stroke="#7C3AED" stroke-width="1.5" rx="6"/>
+
+  <!-- ═══ GOLD ORNAMENT — top-left ═══ -->
+  <circle cx="10" cy="10" r="58" fill="url(#goldOrn)" opacity="0.85"/>
+  <!-- inner ring lines -->
+  <circle cx="10" cy="10" r="36" fill="none" stroke="#FDE047" stroke-width="0.7" opacity="0.5"/>
+  <circle cx="10" cy="10" r="24" fill="none" stroke="#B45309" stroke-width="0.5" opacity="0.6"/>
+
+  <!-- ═══ GREY ORNAMENT — bottom-right ═══ -->
+  <circle cx="850" cy="530" r="58" fill="url(#greyOrn)" opacity="0.80"/>
+  <circle cx="850" cy="530" r="36" fill="none" stroke="#9CA3AF" stroke-width="0.7" opacity="0.45"/>
+  <circle cx="850" cy="530" r="24" fill="none" stroke="#6B7280" stroke-width="0.5" opacity="0.5"/>
+
+  <!-- ═══ HEADER ═══ -->
+  <!-- TECHNICAL PROFILE -->
+  <text x="430" y="44" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="700" letter-spacing="5">TECHNICAL PROFILE</text>
+  <!-- red TECH STACK accent -->
+  <text x="430" y="64" text-anchor="middle" fill="#DC2626" font-size="11" font-weight="600" letter-spacing="8">TECH  STACK</text>
+  <!-- thin divider -->
+  <line x1="60" y1="74" x2="800" y2="74" stroke="#7C3AED" stroke-width="0.8" opacity="0.7"/>
+
+  <!-- ══════════════════════════════════════════
+       GRID: 2 columns × 4 rows
+       Left col: x=30–420  Right col: x=440–830
+       Row heights: 84px each, starting y=82
+  ══════════════════════════════════════════ -->
+
+  <!-- ─── ROW 1 LEFT: Programming Languages ─── -->
+  <rect x="30" y="82" width="390" height="106" fill="#0D0D0D" rx="5" stroke="#4C1D95" stroke-width="0.8"/>
+  <!-- category icon dot + heading -->
+  <circle cx="50" cy="101" r="5" fill="#FDE047"/>
+  <text x="62" y="106" fill="#FDE047" font-size="10" font-weight="700" letter-spacing="2">PROGRAMMING LANGUAGES</text>
+  <line x1="40" y1="112" x2="410" y2="112" stroke="#4C1D95" stroke-width="0.5" opacity="0.8"/>
+  <!-- tags -->
+  <rect x="42" y="120" width="52" height="22" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="68" y="135" text-anchor="middle" fill="#FFFFFF" font-size="11">Java</text>
+  <rect x="104" y="120" width="88" height="22" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="148" y="135" text-anchor="middle" fill="#FFFFFF" font-size="11">JavaScript</text>
+  <!-- subtitle note -->
+  <text x="42" y="174" fill="#6B7280" font-size="9" font-style="italic">Core languages powering all projects</text>
+
+  <!-- ─── ROW 1 RIGHT: CS Fundamentals ─── -->
+  <rect x="440" y="82" width="390" height="106" fill="#0D0D0D" rx="5" stroke="#4C1D95" stroke-width="0.8"/>
+  <circle cx="460" cy="101" r="5" fill="#FDE047"/>
+  <text x="472" y="106" fill="#FDE047" font-size="10" font-weight="700" letter-spacing="2">CS FUNDAMENTALS</text>
+  <line x1="450" y1="112" x2="820" y2="112" stroke="#4C1D95" stroke-width="0.5" opacity="0.8"/>
+  <rect x="452" y="120" width="60" height="22" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="482" y="135" text-anchor="middle" fill="#FFFFFF" font-size="11">OS</text>
+  <rect x="522" y="120" width="58" height="22" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="551" y="135" text-anchor="middle" fill="#FFFFFF" font-size="11">CN</text>
+  <rect x="590" y="120" width="64" height="22" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="622" y="135" text-anchor="middle" fill="#FFFFFF" font-size="11">DBMS</text>
+  <text x="452" y="174" fill="#6B7280" font-size="9" font-style="italic">Operating Systems · Networks · Databases</text>
+
+  <!-- ─── ROW 2 LEFT: Proof of Ability (DSA) ─── -->
+  <!-- subtle red glow border for highlight -->
+  <rect x="30" y="196" width="390" height="106" fill="#0D0007" rx="5" stroke="#DC2626" stroke-width="1.2"/>
+  <circle cx="50" cy="215" r="5" fill="#DC2626"/>
+  <text x="62" y="220" fill="#DC2626" font-size="10" font-weight="700" letter-spacing="2">PROOF OF ABILITY</text>
+  <line x1="40" y1="226" x2="410" y2="226" stroke="#7F1D1D" stroke-width="0.5" opacity="0.9"/>
+  <rect x="42" y="234" width="220" height="24" rx="4" fill="#1C0505" stroke="#DC2626" stroke-width="1"/>
+  <text x="152" y="250" text-anchor="middle" fill="#FFFFFF" font-size="12" font-weight="600">Data Structures &amp; Algorithms</text>
+  <!-- subtle badge -->
+  <rect x="270" y="234" width="82" height="24" rx="4" fill="#7F1D1D" stroke="#DC2626" stroke-width="0.8"/>
+  <text x="311" y="250" text-anchor="middle" fill="#FDE047" font-size="10" font-weight="700">★ CORE SKILL</text>
+  <text x="42" y="287" fill="#6B7280" font-size="9" font-style="italic">Problem-solving · Competitive programming</text>
+
+  <!-- ─── ROW 2 RIGHT: Web Development ─── -->
+  <rect x="440" y="196" width="390" height="106" fill="#0D0D0D" rx="5" stroke="#4C1D95" stroke-width="0.8"/>
+  <circle cx="460" cy="215" r="5" fill="#FDE047"/>
+  <text x="472" y="220" fill="#FDE047" font-size="10" font-weight="700" letter-spacing="2">WEB DEVELOPMENT</text>
+  <line x1="450" y1="226" x2="820" y2="226" stroke="#4C1D95" stroke-width="0.5" opacity="0.8"/>
+  <!-- row 1 of tags -->
+  <rect x="452" y="232" width="52" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="478" y="246" text-anchor="middle" fill="#FFFFFF" font-size="10">HTML</text>
+  <rect x="514" y="232" width="44" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="536" y="246" text-anchor="middle" fill="#FFFFFF" font-size="10">CSS</text>
+  <rect x="568" y="232" width="88" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="612" y="246" text-anchor="middle" fill="#FFFFFF" font-size="10">JavaScript</text>
+  <rect x="666" y="232" width="60" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="696" y="246" text-anchor="middle" fill="#FFFFFF" font-size="10">Node.js</text>
+  <!-- row 2 of tags -->
+  <rect x="452" y="260" width="64" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="484" y="274" text-anchor="middle" fill="#FFFFFF" font-size="10">React.js</text>
+  <rect x="526" y="260" width="88" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="570" y="274" text-anchor="middle" fill="#FFFFFF" font-size="10">TypeScript</text>
+  <text x="452" y="295" fill="#6B7280" font-size="9" font-style="italic">Full-stack development</text>
+
+  <!-- ─── ROW 3 LEFT: Databases ─── -->
+  <rect x="30" y="310" width="390" height="106" fill="#0D0D0D" rx="5" stroke="#4C1D95" stroke-width="0.8"/>
+  <circle cx="50" cy="329" r="5" fill="#FDE047"/>
+  <text x="62" y="334" fill="#FDE047" font-size="10" font-weight="700" letter-spacing="2">DATABASES</text>
+  <line x1="40" y1="340" x2="410" y2="340" stroke="#4C1D95" stroke-width="0.5" opacity="0.8"/>
+  <rect x="42" y="348" width="44" height="22" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="64" y="363" text-anchor="middle" fill="#FFFFFF" font-size="11">SQL</text>
+  <text x="42" y="400" fill="#6B7280" font-size="9" font-style="italic">Relational databases &amp; query design</text>
+
+  <!-- ─── ROW 3 RIGHT: AI & AI-Powered Dev ─── -->
+  <rect x="440" y="310" width="390" height="106" fill="#0D0D0D" rx="5" stroke="#4C1D95" stroke-width="0.8"/>
+  <circle cx="460" cy="329" r="5" fill="#FDE047"/>
+  <text x="472" y="334" fill="#FDE047" font-size="10" font-weight="700" letter-spacing="2">AI &amp; AI-POWERED DEVELOPMENT</text>
+  <line x1="450" y1="340" x2="820" y2="340" stroke="#4C1D95" stroke-width="0.5" opacity="0.8"/>
+  <!-- row 1 of tags -->
+  <rect x="452" y="346" width="90" height="22" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="497" y="361" text-anchor="middle" fill="#FDE047" font-size="10" font-weight="600">Antigravity</text>
+  <rect x="552" y="346" width="100" height="22" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="602" y="361" text-anchor="middle" fill="#FFFFFF" font-size="10">OpenAI Codex</text>
+  <rect x="662" y="346" width="60" height="22" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="692" y="361" text-anchor="middle" fill="#FFFFFF" font-size="10">AI APIs</text>
+  <!-- row 2 of tags -->
+  <rect x="452" y="374" width="56" height="22" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="480" y="389" text-anchor="middle" fill="#FFFFFF" font-size="10">Claude</text>
+  <text x="452" y="408" fill="#6B7280" font-size="9" font-style="italic">AI-assisted &amp; LLM-integrated development</text>
+
+  <!-- ─── ROW 4 LEFT: Developer Tools ─── -->
+  <rect x="30" y="424" width="390" height="102" fill="#0D0D0D" rx="5" stroke="#4C1D95" stroke-width="0.8"/>
+  <circle cx="50" cy="443" r="5" fill="#FDE047"/>
+  <text x="62" y="448" fill="#FDE047" font-size="10" font-weight="700" letter-spacing="2">DEVELOPER TOOLS</text>
+  <line x1="40" y1="454" x2="410" y2="454" stroke="#4C1D95" stroke-width="0.5" opacity="0.8"/>
+  <!-- tags row 1 -->
+  <rect x="42" y="460" width="62" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="73" y="474" text-anchor="middle" fill="#FFFFFF" font-size="10">GitHub</text>
+  <rect x="114" y="460" width="56" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="142" y="474" text-anchor="middle" fill="#FFFFFF" font-size="10">Canva</text>
+  <!-- tags row 2 -->
+  <rect x="42" y="488" width="100" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="92" y="502" text-anchor="middle" fill="#FFFFFF" font-size="10">IntelliJ IDEA</text>
+  <rect x="152" y="488" width="130" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="217" y="502" text-anchor="middle" fill="#FFFFFF" font-size="10">Visual Studio Code</text>
+
+  <!-- ─── ROW 4 RIGHT: Other Skills & Projects ─── -->
+  <rect x="440" y="424" width="390" height="102" fill="#0D0D0D" rx="5" stroke="#4C1D95" stroke-width="0.8"/>
+  <circle cx="460" cy="443" r="5" fill="#FDE047"/>
+  <text x="472" y="448" fill="#FDE047" font-size="10" font-weight="700" letter-spacing="2">OTHER SKILLS &amp; PROJECTS</text>
+  <line x1="450" y1="454" x2="820" y2="454" stroke="#4C1D95" stroke-width="0.5" opacity="0.8"/>
+  <!-- tags row 1 -->
+  <rect x="452" y="460" width="178" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="541" y="474" text-anchor="middle" fill="#FFFFFF" font-size="10">Technical &amp; Creative Writing</text>
+  <!-- tags row 2 -->
+  <rect x="452" y="488" width="120" height="21" rx="4" fill="#1E1B4B" stroke="#6D28D9" stroke-width="0.7"/>
+  <text x="512" y="502" text-anchor="middle" fill="#FFFFFF" font-size="10">Chrome Extensions</text>
+
+  <!-- ═══ FOOTER ═══ -->
+  <line x1="60" y1="530" x2="800" y2="530" stroke="#4C1D95" stroke-width="0.5" opacity="0.5"/>
+  <text x="430" y="538" text-anchor="middle" fill="#4C1D95" font-size="8" letter-spacing="3">konaineleo · github.com/konaineleo</text>
+</svg>
