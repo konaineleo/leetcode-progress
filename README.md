@@ -6,7 +6,7 @@
 
   <a href="https://leetcode.com/smkyuzarsif/"><img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6" alt="LeetCode"/></a>
   <a href="https://github.com/konaineleo"><img src="https://img.shields.io/badge/GitHub-konaineleo-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6" alt="GitHub"/></a>
-  <img src="https://img.shields.io/badge/Global_Rank-%23339%2C788-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
+  <img src="https://img.shields.io/badge/Global_Rank-%23339%2C939-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
 
 </div>
 
@@ -24,9 +24,9 @@
 
   <br/><br/>
 
-  <!-- Amber-Gold Glow LeetCode Submission Heatmap on Obsidian Purple -->
+  <!-- Monochromatic Royal Blue Heatmap Generated Deterministically -->
   <a href="https://leetcode.com/smkyuzarsif/">
-    <img src="assets/leetcode-heatmap.svg" alt="LeetCode Submission Heatmap (Amber Gold Glow)" width="100%"/>
+    <img src="assets/leetcode-heatmap.svg" alt="LeetCode Submission Heatmap (Royal Blue Scale)" width="100%"/>
   </a>
 
   <br/><br/>
@@ -63,26 +63,18 @@
 
 ---
 
-## 🛠️ Technical Profile
-
-<div align="center">
-  <img src="assets/tech-stack.svg" alt="Technical Profile — Tech Stack" width="100%"/>
-</div>
-
----
-
 ## 📊 Comprehensive Profile Metrics
 
 | Metric | Value | Detail |
 | :--- | :--- | :--- |
 | **LeetCode Profile** | [`@smkyuzarsif`](https://leetcode.com/smkyuzarsif/) | Public Profile |
-| **Global Ranking** | **#339,788** | Across active global participants |
+| **Global Ranking** | **#339,939** | Across active global participants |
 | **Total Solved** | **391** | Verified AC problems |
 | **Contest Rating** | **1530.99** | #323,721 ranking (Top 36.83%) |
 | **Contests Attended** | **22** | Live weekly & biweekly contests |
-| **Streak Tracking** | **2 days** (Current) | **144 days** (Longest active) |
+| **Streak Tracking** | **0 days** (Current) | **144 days** (Longest active) |
 | **Earned Badges** | **3** | Special challenge medals |
-| **Last Synced** | `October 17, 2026 at 09:47 UTC` | Automated via GitHub Actions |
+| **Last Synced** | `October 18, 2026 at 02:40 UTC` | Automated via GitHub Actions |
 
 ## 🎯 Difficulty Breakdown
 
@@ -113,6 +105,7 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 
 | Date | Total Solved | Easy | Medium | Hard | Global Rank | Daily Change |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `2026-10-18` | **391** | 212 | 161 | 18 | #339,939 | `-` |
 | `2026-10-17` | **391** | 212 | 161 | 18 | #339,788 | `-` |
 | `2026-10-16` | **391** | 212 | 161 | 18 | #339,788 | `-` |
 

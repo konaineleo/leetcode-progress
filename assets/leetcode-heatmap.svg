@@ -8,7 +8,6 @@
   <text x="8" y="58.5" class="day-label">Mon</text>
   <text x="8" y="91.5" class="day-label">Wed</text>
   <text x="8" y="124.5" class="day-label">Fri</text>
-  <rect x="42.0" y="32.0" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2025-10-19</title></rect>
   <rect x="42.0" y="48.5" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2025-10-20</title></rect>
   <rect x="42.0" y="65.0" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2025-10-21</title></rect>
   <rect x="42.0" y="81.5" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2025-10-22</title></rect>
@@ -372,6 +371,7 @@
   <rect x="883.5" y="98.0" width="13" height="13" fill="#B45309" class="cell"><title>5 submissions on 2026-10-15</title></rect>
   <rect x="883.5" y="114.5" width="13" height="13" fill="#6B3410" class="cell"><title>1 submission on 2026-10-16</title></rect>
   <rect x="883.5" y="131.0" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2026-10-17</title></rect>
+  <rect x="900.0" y="32.0" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2026-10-18</title></rect>
   <text x="75.0" y="20" class="month-label">Nov</text>
   <text x="141.0" y="20" class="month-label">Dec</text>
   <text x="223.5" y="20" class="month-label">Jan</text>
