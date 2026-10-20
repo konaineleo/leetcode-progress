@@ -6,7 +6,7 @@
 
   <a href="https://leetcode.com/smkyuzarsif/"><img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6" alt="LeetCode"/></a>
   <a href="https://github.com/konaineleo"><img src="https://img.shields.io/badge/GitHub-konaineleo-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6" alt="GitHub"/></a>
-  <img src="https://img.shields.io/badge/Global_Rank-%23337%2C206-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
+  <img src="https://img.shields.io/badge/Global_Rank-%23335%2C964-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
 
 </div>
 
@@ -68,13 +68,13 @@
 | Metric | Value | Detail |
 | :--- | :--- | :--- |
 | **LeetCode Profile** | [`@smkyuzarsif`](https://leetcode.com/smkyuzarsif/) | Public Profile |
-| **Global Ranking** | **#337,206** | Across active global participants |
+| **Global Ranking** | **#335,964** | Across active global participants |
 | **Total Solved** | **394** | Verified AC problems |
 | **Contest Rating** | **1530.99** | #323,721 ranking (Top 36.83%) |
 | **Contests Attended** | **22** | Live weekly & biweekly contests |
-| **Streak Tracking** | **1 days** (Current) | **144 days** (Longest active) |
+| **Streak Tracking** | **0 days** (Current) | **144 days** (Longest active) |
 | **Earned Badges** | **3** | Special challenge medals |
-| **Last Synced** | `October 19, 2026 at 02:53 UTC` | Automated via GitHub Actions |
+| **Last Synced** | `October 20, 2026 at 03:03 UTC` | Automated via GitHub Actions |
 
 ## 🎯 Difficulty Breakdown
 
@@ -105,6 +105,7 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 
 | Date | Total Solved | Easy | Medium | Hard | Global Rank | Daily Change |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `2026-10-20` | **394** | 214 | 162 | 18 | #335,964 | `-` |
 | `2026-10-19` | **394** | 214 | 162 | 18 | #337,206 | `+3` |
 | `2026-10-18` | **391** | 212 | 161 | 18 | #339,939 | `-` |
 | `2026-10-17` | **391** | 212 | 161 | 18 | #339,788 | `-` |
