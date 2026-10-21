@@ -6,7 +6,7 @@
 
   <a href="https://leetcode.com/smkyuzarsif/"><img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6" alt="LeetCode"/></a>
   <a href="https://github.com/konaineleo"><img src="https://img.shields.io/badge/GitHub-konaineleo-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6" alt="GitHub"/></a>
-  <img src="https://img.shields.io/badge/Global_Rank-%23335%2C964-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
+  <img src="https://img.shields.io/badge/Global_Rank-%23336%2C174-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
 
 </div>
 
@@ -16,8 +16,8 @@
 
 <div align="center">
 
-  <img src="https://img.shields.io/badge/Solved-394-c084fc?style=for-the-badge&labelColor=0d001a" alt="Solved"/>
-  <img src="https://img.shields.io/badge/Easy-214-00b8a3?style=for-the-badge&labelColor=0d001a" alt="Easy"/>
+  <img src="https://img.shields.io/badge/Solved-400-c084fc?style=for-the-badge&labelColor=0d001a" alt="Solved"/>
+  <img src="https://img.shields.io/badge/Easy-220-00b8a3?style=for-the-badge&labelColor=0d001a" alt="Easy"/>
   <img src="https://img.shields.io/badge/Medium-162-ffc01e?style=for-the-badge&labelColor=0d001a" alt="Medium"/>
   <img src="https://img.shields.io/badge/Hard-18-ef4743?style=for-the-badge&labelColor=0d001a" alt="Hard"/>
   <img src="https://img.shields.io/badge/Rating-1530.99-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rating"/>
@@ -68,22 +68,22 @@
 | Metric | Value | Detail |
 | :--- | :--- | :--- |
 | **LeetCode Profile** | [`@smkyuzarsif`](https://leetcode.com/smkyuzarsif/) | Public Profile |
-| **Global Ranking** | **#335,964** | Across active global participants |
-| **Total Solved** | **394** | Verified AC problems |
+| **Global Ranking** | **#336,174** | Across active global participants |
+| **Total Solved** | **400** | Verified AC problems |
 | **Contest Rating** | **1530.99** | #323,721 ranking (Top 36.83%) |
 | **Contests Attended** | **22** | Live weekly & biweekly contests |
-| **Streak Tracking** | **0 days** (Current) | **144 days** (Longest active) |
+| **Streak Tracking** | **1 days** (Current) | **144 days** (Longest active) |
 | **Earned Badges** | **3** | Special challenge medals |
-| **Last Synced** | `October 20, 2026 at 03:03 UTC` | Automated via GitHub Actions |
+| **Last Synced** | `October 21, 2026 at 02:57 UTC` | Automated via GitHub Actions |
 
 ## 🎯 Difficulty Breakdown
 
 | Difficulty | Solved | Ratio | Visual Badge |
 | :--- | :---: | :---: | :---: |
-| 🟢 **Easy** | **214** | `54.3%` | ![Easy](https://img.shields.io/badge/-Easy-00b8a3?style=flat-square) |
-| 🟡 **Medium** | **162** | `41.1%` | ![Medium](https://img.shields.io/badge/-Medium-ffc01e?style=flat-square) |
-| 🔴 **Hard** | **18** | `4.6%` | ![Hard](https://img.shields.io/badge/-Hard-ef4743?style=flat-square) |
-| 🏆 **Total** | **394** | `100.0%` | ![Total](https://img.shields.io/badge/-Solved-c084fc?style=flat-square) |
+| 🟢 **Easy** | **220** | `55.0%` | ![Easy](https://img.shields.io/badge/-Easy-00b8a3?style=flat-square) |
+| 🟡 **Medium** | **162** | `40.5%` | ![Medium](https://img.shields.io/badge/-Medium-ffc01e?style=flat-square) |
+| 🔴 **Hard** | **18** | `4.5%` | ![Hard](https://img.shields.io/badge/-Hard-ef4743?style=flat-square) |
+| 🏆 **Total** | **400** | `100.0%` | ![Total](https://img.shields.io/badge/-Solved-c084fc?style=flat-square) |
 
 ## 🏅 Earned Badges
 
@@ -105,6 +105,7 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 
 | Date | Total Solved | Easy | Medium | Hard | Global Rank | Daily Change |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `2026-10-21` | **400** | 220 | 162 | 18 | #336,174 | `+6` |
 | `2026-10-20` | **394** | 214 | 162 | 18 | #335,964 | `-` |
 | `2026-10-19` | **394** | 214 | 162 | 18 | #337,206 | `+3` |
 | `2026-10-18` | **391** | 212 | 161 | 18 | #339,939 | `-` |
