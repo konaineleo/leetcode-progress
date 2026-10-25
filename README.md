@@ -6,7 +6,7 @@
 
   <a href="https://leetcode.com/smkyuzarsif/"><img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6" alt="LeetCode"/></a>
   <a href="https://github.com/konaineleo"><img src="https://img.shields.io/badge/GitHub-konaineleo-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6" alt="GitHub"/></a>
-  <img src="https://img.shields.io/badge/Global_Rank-%23316%2C964-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
+  <img src="https://img.shields.io/badge/Global_Rank-%23315%2C832-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
 
 </div>
 
@@ -68,13 +68,13 @@
 | Metric | Value | Detail |
 | :--- | :--- | :--- |
 | **LeetCode Profile** | [`@smkyuzarsif`](https://leetcode.com/smkyuzarsif/) | Public Profile |
-| **Global Ranking** | **#316,964** | Across active global participants |
+| **Global Ranking** | **#315,832** | Across active global participants |
 | **Total Solved** | **409** | Verified AC problems |
 | **Contest Rating** | **1525.81** | #334,296 ranking (Top 38.00%) |
 | **Contests Attended** | **23** | Live weekly & biweekly contests |
-| **Streak Tracking** | **4 days** (Current) | **144 days** (Longest active) |
+| **Streak Tracking** | **1 days** (Current) | **144 days** (Longest active) |
 | **Earned Badges** | **3** | Special challenge medals |
-| **Last Synced** | `October 24, 2026 at 02:57 UTC` | Automated via GitHub Actions |
+| **Last Synced** | `October 25, 2026 at 02:50 UTC` | Automated via GitHub Actions |
 
 ## 🎯 Difficulty Breakdown
 
@@ -105,6 +105,7 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 
 | Date | Total Solved | Easy | Medium | Hard | Global Rank | Daily Change |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `2026-10-25` | **409** | 227 | 164 | 18 | #315,832 | `-` |
 | `2026-10-24` | **409** | 227 | 164 | 18 | #316,964 | `+1` |
 | `2026-10-23` | **408** | 226 | 164 | 18 | #318,197 | `+1` |
 | `2026-10-22` | **407** | 225 | 164 | 18 | #328,256 | `+7` |
