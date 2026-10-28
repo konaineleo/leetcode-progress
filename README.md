@@ -6,7 +6,7 @@
 
   <a href="https://leetcode.com/smkyuzarsif/"><img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6" alt="LeetCode"/></a>
   <a href="https://github.com/konaineleo"><img src="https://img.shields.io/badge/GitHub-konaineleo-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6" alt="GitHub"/></a>
-  <img src="https://img.shields.io/badge/Global_Rank-%23312%2C129-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
+  <img src="https://img.shields.io/badge/Global_Rank-%23310%2C961-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
 
 </div>
 
@@ -68,13 +68,13 @@
 | Metric | Value | Detail |
 | :--- | :--- | :--- |
 | **LeetCode Profile** | [`@smkyuzarsif`](https://leetcode.com/smkyuzarsif/) | Public Profile |
-| **Global Ranking** | **#312,129** | Across active global participants |
+| **Global Ranking** | **#310,961** | Across active global participants |
 | **Total Solved** | **413** | Verified AC problems |
 | **Contest Rating** | **1525.81** | #334,296 ranking (Top 38.00%) |
 | **Contests Attended** | **23** | Live weekly & biweekly contests |
-| **Streak Tracking** | **2 days** (Current) | **144 days** (Longest active) |
+| **Streak Tracking** | **0 days** (Current) | **144 days** (Longest active) |
 | **Earned Badges** | **3** | Special challenge medals |
-| **Last Synced** | `October 27, 2026 at 03:22 UTC` | Automated via GitHub Actions |
+| **Last Synced** | `October 28, 2026 at 03:38 UTC` | Automated via GitHub Actions |
 
 ## 🎯 Difficulty Breakdown
 
@@ -105,6 +105,7 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 
 | Date | Total Solved | Easy | Medium | Hard | Global Rank | Daily Change |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `2026-10-28` | **413** | 228 | 167 | 18 | #310,961 | `-` |
 | `2026-10-27` | **413** | 228 | 167 | 18 | #312,129 | `+1` |
 | `2026-10-26` | **412** | 228 | 166 | 18 | #311,956 | `+3` |
 | `2026-10-25` | **409** | 227 | 164 | 18 | #315,832 | `-` |
@@ -114,7 +115,6 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 | `2026-10-21` | **400** | 220 | 162 | 18 | #336,174 | `+6` |
 | `2026-10-20` | **394** | 214 | 162 | 18 | #335,964 | `-` |
 | `2026-10-19` | **394** | 214 | 162 | 18 | #337,206 | `+3` |
-| `2026-10-18` | **391** | 212 | 161 | 18 | #339,939 | `-` |
 
 ---
 
