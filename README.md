@@ -6,7 +6,7 @@
 
   <a href="https://leetcode.com/smkyuzarsif/"><img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6" alt="LeetCode"/></a>
   <a href="https://github.com/konaineleo"><img src="https://img.shields.io/badge/GitHub-konaineleo-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6" alt="GitHub"/></a>
-  <img src="https://img.shields.io/badge/Global_Rank-%23311%2C343-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
+  <img src="https://img.shields.io/badge/Global_Rank-%23311%2C551-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
 
 </div>
 
@@ -20,7 +20,7 @@
   <img src="https://img.shields.io/badge/Easy-228-00b8a3?style=for-the-badge&labelColor=0d001a" alt="Easy"/>
   <img src="https://img.shields.io/badge/Medium-167-ffc01e?style=for-the-badge&labelColor=0d001a" alt="Medium"/>
   <img src="https://img.shields.io/badge/Hard-18-ef4743?style=for-the-badge&labelColor=0d001a" alt="Hard"/>
-  <img src="https://img.shields.io/badge/Rating-1525.81-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rating"/>
+  <img src="https://img.shields.io/badge/Rating-1580.19-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rating"/>
 
   <br/><br/>
 
@@ -68,13 +68,13 @@
 | Metric | Value | Detail |
 | :--- | :--- | :--- |
 | **LeetCode Profile** | [`@smkyuzarsif`](https://leetcode.com/smkyuzarsif/) | Public Profile |
-| **Global Ranking** | **#311,343** | Across active global participants |
+| **Global Ranking** | **#311,551** | Across active global participants |
 | **Total Solved** | **413** | Verified AC problems |
-| **Contest Rating** | **1525.81** | #334,296 ranking (Top 38.00%) |
-| **Contests Attended** | **23** | Live weekly & biweekly contests |
-| **Streak Tracking** | **1 days** (Current) | **144 days** (Longest active) |
+| **Contest Rating** | **1580.19** | #241,970 ranking (Top 27.52%) |
+| **Contests Attended** | **24** | Live weekly & biweekly contests |
+| **Streak Tracking** | **0 days** (Current) | **144 days** (Longest active) |
 | **Earned Badges** | **3** | Special challenge medals |
-| **Last Synced** | `October 30, 2026 at 03:59 UTC` | Automated via GitHub Actions |
+| **Last Synced** | `October 31, 2026 at 03:44 UTC` | Automated via GitHub Actions |
 
 ## 🎯 Difficulty Breakdown
 
@@ -105,6 +105,7 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 
 | Date | Total Solved | Easy | Medium | Hard | Global Rank | Daily Change |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `2026-10-31` | **413** | 228 | 167 | 18 | #311,551 | `-` |
 | `2026-10-30` | **413** | 228 | 167 | 18 | #311,343 | `-` |
 | `2026-10-29` | **413** | 228 | 167 | 18 | #311,155 | `-` |
 | `2026-10-28` | **413** | 228 | 167 | 18 | #310,961 | `-` |
@@ -114,7 +115,6 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 | `2026-10-24` | **409** | 227 | 164 | 18 | #316,964 | `+1` |
 | `2026-10-23` | **408** | 226 | 164 | 18 | #318,197 | `+1` |
 | `2026-10-22` | **407** | 225 | 164 | 18 | #328,256 | `+7` |
-| `2026-10-21` | **400** | 220 | 162 | 18 | #336,174 | `+6` |
 
 ---
 
