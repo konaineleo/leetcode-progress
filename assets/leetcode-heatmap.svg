@@ -8,7 +8,6 @@
   <text x="8" y="58.5" class="day-label">Mon</text>
   <text x="8" y="91.5" class="day-label">Wed</text>
   <text x="8" y="124.5" class="day-label">Fri</text>
-  <rect x="42.0" y="48.5" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2025-11-03</title></rect>
   <rect x="42.0" y="65.0" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2025-11-04</title></rect>
   <rect x="42.0" y="81.5" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2025-11-05</title></rect>
   <rect x="42.0" y="98.0" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2025-11-06</title></rect>
@@ -372,7 +371,7 @@
   <rect x="883.5" y="114.5" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2026-10-30</title></rect>
   <rect x="883.5" y="131.0" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2026-10-31</title></rect>
   <rect x="900.0" y="32.0" width="13" height="13" fill="#EA580C" class="cell"><title>7 submissions on 2026-11-01</title></rect>
-  <text x="42.0" y="20" class="month-label">Nov</text>
+  <rect x="900.0" y="48.5" width="13" height="13" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2" class="cell"><title>No submissions on 2026-11-02</title></rect>
   <text x="108.0" y="20" class="month-label">Dec</text>
   <text x="190.5" y="20" class="month-label">Jan</text>
   <text x="256.5" y="20" class="month-label">Feb</text>
@@ -384,6 +383,7 @@
   <text x="685.5" y="20" class="month-label">Aug</text>
   <text x="768.0" y="20" class="month-label">Sep</text>
   <text x="834.0" y="20" class="month-label">Oct</text>
+  <text x="900.0" y="20" class="month-label">Nov</text>
   <g transform="translate(542.5, 165.5)">
     <text x="0" y="11" class="legend-text">Activity:</text>
     <rect x="60" y="0" width="13" height="13" rx="3.5" fill="#120A1E" stroke="#2A1B3D" stroke-width="1.2"/>
