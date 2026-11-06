@@ -6,7 +6,7 @@
 
   <a href="https://leetcode.com/smkyuzarsif/"><img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6" alt="LeetCode"/></a>
   <a href="https://github.com/konaineleo"><img src="https://img.shields.io/badge/GitHub-konaineleo-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6" alt="GitHub"/></a>
-  <img src="https://img.shields.io/badge/Global_Rank-%23307%2C083-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
+  <img src="https://img.shields.io/badge/Global_Rank-%23303%2C196-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
 
 </div>
 
@@ -16,8 +16,8 @@
 
 <div align="center">
 
-  <img src="https://img.shields.io/badge/Solved-420-c084fc?style=for-the-badge&labelColor=0d001a" alt="Solved"/>
-  <img src="https://img.shields.io/badge/Easy-232-00b8a3?style=for-the-badge&labelColor=0d001a" alt="Easy"/>
+  <img src="https://img.shields.io/badge/Solved-421-c084fc?style=for-the-badge&labelColor=0d001a" alt="Solved"/>
+  <img src="https://img.shields.io/badge/Easy-233-00b8a3?style=for-the-badge&labelColor=0d001a" alt="Easy"/>
   <img src="https://img.shields.io/badge/Medium-170-ffc01e?style=for-the-badge&labelColor=0d001a" alt="Medium"/>
   <img src="https://img.shields.io/badge/Hard-18-ef4743?style=for-the-badge&labelColor=0d001a" alt="Hard"/>
   <img src="https://img.shields.io/badge/Rating-1580.19-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rating"/>
@@ -68,22 +68,22 @@
 | Metric | Value | Detail |
 | :--- | :--- | :--- |
 | **LeetCode Profile** | [`@smkyuzarsif`](https://leetcode.com/smkyuzarsif/) | Public Profile |
-| **Global Ranking** | **#307,083** | Across active global participants |
-| **Total Solved** | **420** | Verified AC problems |
+| **Global Ranking** | **#303,196** | Across active global participants |
+| **Total Solved** | **421** | Verified AC problems |
 | **Contest Rating** | **1580.19** | #241,970 ranking (Top 27.52%) |
 | **Contests Attended** | **24** | Live weekly & biweekly contests |
-| **Streak Tracking** | **4 days** (Current) | **144 days** (Longest active) |
+| **Streak Tracking** | **5 days** (Current) | **144 days** (Longest active) |
 | **Earned Badges** | **3** | Special challenge medals |
-| **Last Synced** | `November 05, 2026 at 04:46 UTC` | Automated via GitHub Actions |
+| **Last Synced** | `November 06, 2026 at 04:44 UTC` | Automated via GitHub Actions |
 
 ## 🎯 Difficulty Breakdown
 
 | Difficulty | Solved | Ratio | Visual Badge |
 | :--- | :---: | :---: | :---: |
-| 🟢 **Easy** | **232** | `55.2%` | ![Easy](https://img.shields.io/badge/-Easy-00b8a3?style=flat-square) |
-| 🟡 **Medium** | **170** | `40.5%` | ![Medium](https://img.shields.io/badge/-Medium-ffc01e?style=flat-square) |
+| 🟢 **Easy** | **233** | `55.3%` | ![Easy](https://img.shields.io/badge/-Easy-00b8a3?style=flat-square) |
+| 🟡 **Medium** | **170** | `40.4%` | ![Medium](https://img.shields.io/badge/-Medium-ffc01e?style=flat-square) |
 | 🔴 **Hard** | **18** | `4.3%` | ![Hard](https://img.shields.io/badge/-Hard-ef4743?style=flat-square) |
-| 🏆 **Total** | **420** | `100.0%` | ![Total](https://img.shields.io/badge/-Solved-c084fc?style=flat-square) |
+| 🏆 **Total** | **421** | `100.0%` | ![Total](https://img.shields.io/badge/-Solved-c084fc?style=flat-square) |
 
 ## 🏅 Earned Badges
 
@@ -105,6 +105,7 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 
 | Date | Total Solved | Easy | Medium | Hard | Global Rank | Daily Change |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `2026-11-06` | **421** | 233 | 170 | 18 | #303,196 | `+1` |
 | `2026-11-05` | **420** | 232 | 170 | 18 | #307,083 | `+3` |
 | `2026-11-04` | **417** | 230 | 169 | 18 | #308,215 | `+1` |
 | `2026-11-03` | **416** | 229 | 169 | 18 | #310,760 | `+2` |
@@ -114,7 +115,6 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 | `2026-10-30` | **413** | 228 | 167 | 18 | #311,343 | `-` |
 | `2026-10-29` | **413** | 228 | 167 | 18 | #311,155 | `-` |
 | `2026-10-28` | **413** | 228 | 167 | 18 | #310,961 | `-` |
-| `2026-10-27` | **413** | 228 | 167 | 18 | #312,129 | `+1` |
 
 ---
 
