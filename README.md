@@ -6,7 +6,7 @@
 
   <a href="https://leetcode.com/smkyuzarsif/"><img src="https://img.shields.io/badge/LeetCode-smkyuzarsif-c084fc?style=for-the-badge&logo=leetcode&logoColor=0d001a&labelColor=5b21b6" alt="LeetCode"/></a>
   <a href="https://github.com/konaineleo"><img src="https://img.shields.io/badge/GitHub-konaineleo-c084fc?style=for-the-badge&logo=github&logoColor=0d001a&labelColor=5b21b6" alt="GitHub"/></a>
-  <img src="https://img.shields.io/badge/Global_Rank-%23298%2C489-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
+  <img src="https://img.shields.io/badge/Global_Rank-%23298%2C608-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rank"/>
 
 </div>
 
@@ -16,11 +16,11 @@
 
 <div align="center">
 
-  <img src="https://img.shields.io/badge/Solved-425-c084fc?style=for-the-badge&labelColor=0d001a" alt="Solved"/>
+  <img src="https://img.shields.io/badge/Solved-426-c084fc?style=for-the-badge&labelColor=0d001a" alt="Solved"/>
   <img src="https://img.shields.io/badge/Easy-234-00b8a3?style=for-the-badge&labelColor=0d001a" alt="Easy"/>
-  <img src="https://img.shields.io/badge/Medium-172-ffc01e?style=for-the-badge&labelColor=0d001a" alt="Medium"/>
+  <img src="https://img.shields.io/badge/Medium-173-ffc01e?style=for-the-badge&labelColor=0d001a" alt="Medium"/>
   <img src="https://img.shields.io/badge/Hard-19-ef4743?style=for-the-badge&labelColor=0d001a" alt="Hard"/>
-  <img src="https://img.shields.io/badge/Rating-1566.51-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rating"/>
+  <img src="https://img.shields.io/badge/Rating-1597.13-a855f7?style=for-the-badge&labelColor=0d001a" alt="Rating"/>
 
   <br/><br/>
 
@@ -68,22 +68,22 @@
 | Metric | Value | Detail |
 | :--- | :--- | :--- |
 | **LeetCode Profile** | [`@smkyuzarsif`](https://leetcode.com/smkyuzarsif/) | Public Profile |
-| **Global Ranking** | **#298,489** | Across active global participants |
-| **Total Solved** | **425** | Verified AC problems |
-| **Contest Rating** | **1566.51** | #262,908 ranking (Top 29.82%) |
-| **Contests Attended** | **25** | Live weekly & biweekly contests |
-| **Streak Tracking** | **0 days** (Current) | **144 days** (Longest active) |
+| **Global Ranking** | **#298,608** | Across active global participants |
+| **Total Solved** | **426** | Verified AC problems |
+| **Contest Rating** | **1597.13** | #220,392 ranking (Top 25.00%) |
+| **Contests Attended** | **26** | Live weekly & biweekly contests |
+| **Streak Tracking** | **1 days** (Current) | **144 days** (Longest active) |
 | **Earned Badges** | **3** | Special challenge medals |
-| **Last Synced** | `November 19, 2026 at 05:35 UTC` | Automated via GitHub Actions |
+| **Last Synced** | `November 20, 2026 at 05:23 UTC` | Automated via GitHub Actions |
 
 ## 🎯 Difficulty Breakdown
 
 | Difficulty | Solved | Ratio | Visual Badge |
 | :--- | :---: | :---: | :---: |
-| 🟢 **Easy** | **234** | `55.1%` | ![Easy](https://img.shields.io/badge/-Easy-00b8a3?style=flat-square) |
-| 🟡 **Medium** | **172** | `40.5%` | ![Medium](https://img.shields.io/badge/-Medium-ffc01e?style=flat-square) |
+| 🟢 **Easy** | **234** | `54.9%` | ![Easy](https://img.shields.io/badge/-Easy-00b8a3?style=flat-square) |
+| 🟡 **Medium** | **173** | `40.6%` | ![Medium](https://img.shields.io/badge/-Medium-ffc01e?style=flat-square) |
 | 🔴 **Hard** | **19** | `4.5%` | ![Hard](https://img.shields.io/badge/-Hard-ef4743?style=flat-square) |
-| 🏆 **Total** | **425** | `100.0%` | ![Total](https://img.shields.io/badge/-Solved-c084fc?style=flat-square) |
+| 🏆 **Total** | **426** | `100.0%` | ![Total](https://img.shields.io/badge/-Solved-c084fc?style=flat-square) |
 
 ## 🏅 Earned Badges
 
@@ -105,6 +105,7 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 
 | Date | Total Solved | Easy | Medium | Hard | Global Rank | Daily Change |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `2026-11-20` | **426** | 234 | 173 | 19 | #298,608 | `+1` |
 | `2026-11-19` | **425** | 234 | 172 | 19 | #298,489 | `-` |
 | `2026-11-18` | **425** | 234 | 172 | 19 | #298,363 | `-` |
 | `2026-11-17` | **425** | 234 | 172 | 19 | #298,247 | `-` |
@@ -114,7 +115,6 @@ Catalog contains **1** documented solution(s) organized in [`solutions/`](soluti
 | `2026-11-13` | **423** | 233 | 172 | 18 | #300,306 | `-` |
 | `2026-11-12` | **423** | 233 | 172 | 18 | #300,155 | `-` |
 | `2026-11-11` | **423** | 233 | 172 | 18 | #300,015 | `-` |
-| `2026-11-10` | **423** | 233 | 172 | 18 | #299,860 | `-` |
 
 ---
 
