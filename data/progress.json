@@ -419,6 +419,16 @@
       "ranking": 295609,
       "contestRating": 1605.39,
       "deltaSolved": 0
+    },
+    {
+      "date": "2026-11-27",
+      "totalSolved": 428,
+      "easySolved": 235,
+      "mediumSolved": 174,
+      "hardSolved": 19,
+      "ranking": 295743,
+      "contestRating": 1605.39,
+      "deltaSolved": 0
     }
   ],
   "problems": {},
@@ -429,7 +439,7 @@
   "latest": {
     "username": "smkyuzarsif",
     "realName": "SMK",
-    "ranking": 295609,
+    "ranking": 295743,
     "totalSolved": 428,
     "easySolved": 235,
     "mediumSolved": 174,
@@ -649,6 +659,6 @@
       }
     ],
     "recentAcSubmissions": [],
-    "lastUpdated": "2026-11-26T06:28:47.538046+00:00"
+    "lastUpdated": "2026-11-27T06:18:39.767632+00:00"
   }
 }
